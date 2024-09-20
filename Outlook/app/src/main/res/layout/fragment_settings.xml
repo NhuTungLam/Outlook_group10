@@ -163,7 +163,7 @@
             android:textSize="16sp"
             android:textColor="@android:color/holo_blue_dark"
             android:drawableStart="@drawable/ic_reset"
-            android:tint="@android:color/holo_blue_dark"/>
+            android:drawableTint="@android:color/holo_blue_dark"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -183,7 +183,7 @@
             android:textSize="16sp"
             android:textColor="@android:color/holo_red_dark"
             android:drawableStart="@drawable/ic_remove"
-            android:tint="@android:color/holo_red_dark"/>
+            android:drawableTint="@android:color/holo_red_dark"/>
 
         <TextView
             android:layout_width="wrap_content"
