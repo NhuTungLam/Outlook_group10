@@ -75,6 +75,15 @@
     <string name="account_description">Account Description</string>
     <string name="try_resetting_the_account_if_you_have_sync_issues">Try resetting the account if you have sync issues</string>
     <string name="removing_this_account_from_the_app_will_delete_any_local_data_stored_in_the_app">Removing this account from the app will delete any local data stored in the app</string>
+    <string name="back">back</string>
+    <string name="tue">TUE</string>
+    <string name="sun">SUN</string>
+    <string name="nov_2024">Nov 2024</string>
+    <string name="mon">MON</string>
+    <string name="wed">WED</string>
+    <string name="thur">THUR</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
 
     >>>>>>> testing
 </resources>
