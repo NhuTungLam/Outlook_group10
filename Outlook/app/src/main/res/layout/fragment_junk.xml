@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.DraftFragment">
+    tools:context=".fragment.JunkFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:id="@+id/firstLineInJunk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nothing_in_deleted"
+            android:text="@string/nothing_in_junk"
             android:textSize="17sp"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"

@@ -39,6 +39,7 @@
     <string name="Notification">Notification</string>
     <string name="Search">Search</string>
     <string name="nothing_in_archive">Nothing in Archive</string>
+    <string name="nothing_in_junk">Nothing in Junk</string>
     <string name="in_archive">Clean up your inbox by\nmoving messages to Archive</string>
     <string name="go_to_inbox">GO TO INBOX</string>
     <string name="nothing_in_deleted">Nothing in Deleted</string>
@@ -65,7 +66,7 @@
     <string name="snooze">Snooze</string>
     <string name="Forward">Forward</string>
     <string name="print">Print</string>
-=======
+=====
     <string name="you_have_no_contacts_yet">You have no contacts yet</string>
     <string name="No_new_notifications">No new notifications</string>
     <string name="Please_check_back_later">Please check back later</string>
