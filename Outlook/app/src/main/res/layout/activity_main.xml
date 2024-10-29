@@ -61,7 +61,7 @@ app:layout_behavior="@string/appbar_scrolling_view_behavior">
                     android:scaleType="centerInside"
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_notification"
-                    android:contentDescription="Notification"/>
+                    android:contentDescription="@string/Notification"/>
 
                 <!-- SearchView (initially hidden) -->
                 <ImageView
@@ -71,7 +71,7 @@ app:layout_behavior="@string/appbar_scrolling_view_behavior">
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="end"
                     android:clickable="true"
-                    android:contentDescription="search"
+                    android:contentDescription="@string/Search"
                     android:focusable="true"
                     android:padding="10dp"
                     android:src="@drawable/ic_find_mail" />
@@ -135,7 +135,7 @@ app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-    android:text="New mail"
+    android:text="@string/New_mail"
     android:textColor="@color/white"
     android:backgroundTint="@color/blue_theme"
     app:icon="@drawable/ic_compose"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.DraftFragment">
+    tools:context=".fragment.JunkFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:id="@+id/firstLineInJunk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nothing in Deleted"
+            android:text="@string/nothing_in_junk"
             android:textSize="17sp"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -34,7 +34,7 @@
             android:id="@+id/secondLineInJunk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Looks empty over here"
+            android:text="@string/look_empty"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -51,7 +51,7 @@
             android:alpha="0.6"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/secondLineInJunk"
-            android:text="GO TO INBOX"
+            android:text="@string/go_to_inbox"
             android:textColor="@color/blue_character"
             android:background="@drawable/nav_item_background"
             />

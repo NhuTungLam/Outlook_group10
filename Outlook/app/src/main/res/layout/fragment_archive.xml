@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.DraftFragment">
+    tools:context=".fragment.ArchiveFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:id="@+id/firstLineInArchive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nothing in Archive"
+            android:text="@string/nothing_in_archive"
             android:textSize="17sp"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -34,7 +34,7 @@
             android:id="@+id/secondLineInArchive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Clean up your inbox by\nmoving messages to Archive"
+            android:text="@string/in_archive"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -51,7 +51,7 @@
             android:alpha="0.6"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/secondLineInArchive"
-            android:text="GO TO INBOX"
+            android:text="@string/go_to_inbox"
             android:textColor="@color/blue_character"
             android:background="@drawable/nav_item_background"
             />

@@ -1,14 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.AppContactFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<TextView
+    android:id="@+id/otherText1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/pinned"
+    android:textColor="@color/blue_theme"
+    android:textSize="20sp"
+    android:textStyle="bold"
+    android:layout_marginLeft="20sp"
+    >
+</TextView>
+    <RelativeLayout
+        android:id="@+id/item1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/otherText1"
+        >
+        <ImageView
+            android:id="@+id/picture1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_letter"
+            android:layout_margin="20sp"
+            android:layout_centerVertical="true"
+            >
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/Email"
+            android:textColor="@color/black"
+            android:layout_margin="20sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/picture1"
+            >
+        </TextView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/item2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item1"
+        >
+        <ImageView
+            android:id="@+id/picture2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_calendar"
+            android:layout_marginHorizontal="20sp"
+            android:layout_centerVertical="true"
+            >
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/calendar"
+            android:textColor="@color/black"
+            android:layout_margin="20sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/picture2"
+            >
+        </TextView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/item3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item2"
+        >
+        <ImageView
+            android:id="@+id/picture3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_letter"
+            android:layout_margin="20sp"
+            android:layout_centerVertical="true"
+            >
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/file"
+            android:textColor="@color/black"
+            android:layout_margin="20sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/picture3"
+            >
+        </TextView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/item4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item3">
+        <ImageView
+            android:id="@+id/picture4"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/contact"
+            android:layout_margin="20sp"
+            android:layout_centerVertical="true"
+            >
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/contact"
+            android:textColor="@color/black"
+            android:layout_margin="20sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/picture4"
+            >
+        </TextView>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/more_apps"
+        android:textSize="20sp"
+        android:textColor="@color/blue_theme"
+        android:textStyle="bold"
+        android:layout_below="@id/item4"
+        android:layout_marginLeft="20sp">
+    </TextView>
 
-</FrameLayout>
+</RelativeLayout>

@@ -9,37 +9,37 @@
                 <group android:checkableBehavior="single">
                     <item
                         android:id="@+id/inbox"
-                        android:title="Inbox"
+                        android:title="@string/Inbox"
                         android:visible="true"
                         android:icon="@drawable/inbox"/>
                     <item
                         android:id="@+id/draft"
-                        android:title="Drafts"
+                        android:title="@string/Drafts"
                         android:icon="@drawable/draft"
                         />
                     <item
                         android:id="@+id/archive"
-                        android:title="Archive"
+                        android:title="@string/Archive"
                         android:icon="@drawable/archive"/>
                     <item
                         android:id="@+id/junk"
-                        android:title="Junk"
+                        android:title="@string/Junk"
                         android:icon="@drawable/junk"/>
                     <item
                         android:id="@+id/sent"
-                        android:title="Sent"
+                        android:title="@string/Sent"
                         android:icon="@drawable/sent"/>
                     <item
                         android:id="@+id/deleted"
-                        android:title="Deleted"
+                        android:title="@string/Deleted"
                         android:icon="@drawable/deleted"/>
                     <item
                         android:id="@+id/unwanted"
-                        android:title="Unwanted"
+                        android:title="@string/Unwanted"
                         android:icon="@drawable/unwanted"/>
                     <item
                         android:id="@+id/settings"
-                        android:title="Settings"
+                        android:title="@string/Settings"
                         android:icon="@drawable/setting"/>
 
 
