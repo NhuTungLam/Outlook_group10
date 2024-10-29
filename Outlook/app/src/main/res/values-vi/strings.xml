@@ -9,23 +9,24 @@
     <string name="home">Trang chủ</string>
     <string name="meet">Cuộc họp</string>
     <string name="file">Tệp</string>
+    <string name="Email">Thư</string>
     <string name="new_contact">Liên hệ mới</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="search_in_mail">tìm kiếm thư</string>
-    <string name="compose">soạn thảo</string>
-    <string name="search_in_chat_and_spaces">tìm kếm hội thoại và không gian\n</string>
-    <string name="new_space">không gian mới</string>
-    <string name="app_contact">app contact</string>
+    <string name="search_in_mail">Tìm kiếm thư</string>
+    <string name="compose">Soạn thảo</string>
+    <string name="search_in_chat_and_spaces">Tìm kếm hội thoại và không gian\n</string>
+    <string name="new_space">Không gian mới</string>
+    <string name="app_contact">Tất cả ứng dụng</string>
     <string name="lam_nhu">lam nhu</string>
     <string name="nhutunglam1_gmail_com">nhutunglam1@gmail.com</string>
     <string name="mail_calendar">Thư &amp; Lịch</string>
-    <string name="block_external_images">chặn hình ảnh</string>
-    <string name="report_spam">báo cáo spam</string>
-    <string name="categories">thể loại</string>
-    <string name="reset_account">khởi động lại tài khoản</string>
-    <string name="remove_account">loại bỏ tài khoản</string>
-    <string name="avatar">ảnh đại diện</string>
+    <string name="block_external_images">Chặn hình ảnh</string>
+    <string name="report_spam">Báo cáo spam</string>
+    <string name="categories">Thể loại</string>
+    <string name="reset_account">Khởi động lại tài khoản</string>
+    <string name="remove_account">Loại bỏ tài khoản</string>
+    <string name="avatar">Ảnh đại diện</string>
     <string name="New_mail">Thư mới</string>
     <string name="Name">Tên</string>
     <string name="Head_Mail">Tiêu đề</string>
@@ -67,13 +68,21 @@
     <string name="Forward">Chuyển tiếp</string>
     <string name="print">In</string>
     <string name="Reply">Phản hồi</string>
+
+    <string name="pinned">Đã ghim</string>
+    <string name="more_apps">Các ứng dụng khác</string>
+<!--separate-->
+
     <string name="question_con">Question con</string>
     <string name="account_description">Account Description</string>
     <string name="try_resetting_the_account_if_you_have_sync_issues">Try resetting the account if you have sync issues</string>
 
     =======
+
     <string name="you_have_no_contacts_yet">Không có liên hệ</string>
     <string name="No_new_notifications">Không có thông báo mới</string>
     <string name="Please_check_back_later">Vui lòng kiểm tra lại sau</string>
->>>>>>> testing
+    <string name="removing_this_account_from_the_app_will_delete_any_local_data_stored_in_the_app">Loại bỏ tài khoản trong ứng dụng sẽ xóa các lưu trữ cục bộ</string>
+
+    <!--testing-->
 </resources>

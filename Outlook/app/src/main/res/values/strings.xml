@@ -8,24 +8,25 @@
     <string name="home">Home</string>
     <string name="meet">Meet</string>
     <string name="file">File</string>
+    <string name="Email">Email</string>
     <string name="new_contact">New contact</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="search_in_mail">search in email</string>
-    <string name="compose">compose</string>
-    <string name="search_in_chat_and_spaces">search in chat and space\n</string>
-    <string name="new_space">new space</string>
-    <string name="app_contact">app contact</string>
+    <string name="search_in_mail">Search in email</string>
+    <string name="compose">Compose</string>
+    <string name="search_in_chat_and_spaces">Search in chat and space\n</string>
+    <string name="new_space">New space</string>
+    <string name="app_contact">App contact</string>
     <string name="Reply">Reply</string>
     <string name="lam_nhu">lam nhu</string>
     <string name="nhutunglam1_gmail_com">nhutunglam1@gmail.com</string>
     <string name="mail_calendar">Mail &amp; Calendar</string>
-    <string name="block_external_images">block external images</string>
-    <string name="report_spam">report spam</string>
-    <string name="categories">categories</string>
-    <string name="reset_account">reset account</string>
-    <string name="remove_account">remove account</string>
-    <string name="avatar">avatar</string>
+    <string name="block_external_images">Block external images</string>
+    <string name="report_spam">Report spam</string>
+    <string name="categories">Categories</string>
+    <string name="reset_account">Reset account</string>
+    <string name="remove_account">Remove account</string>
+    <string name="avatar">Avatar</string>
     <string name="New_mail">New mail</string>
     <string name="Name">Name</string>
     <string name="Head_Mail">Head Mail</string>
@@ -39,7 +40,6 @@
     <string name="Notification">Notification</string>
     <string name="Search">Search</string>
     <string name="nothing_in_archive">Nothing in Archive</string>
-    <string name="nothing_in_junk">Nothing in Junk</string>
     <string name="in_archive">Clean up your inbox by\nmoving messages to Archive</string>
     <string name="go_to_inbox">GO TO INBOX</string>
     <string name="nothing_in_deleted">Nothing in Deleted</string>
@@ -66,7 +66,8 @@
     <string name="snooze">Snooze</string>
     <string name="Forward">Forward</string>
     <string name="print">Print</string>
-=====
+    <string name="pinned">Pinned</string>
+    <string name="more_apps">More Apps</string>
     <string name="you_have_no_contacts_yet">You have no contacts yet</string>
     <string name="No_new_notifications">No new notifications</string>
     <string name="Please_check_back_later">Please check back later</string>
@@ -74,6 +75,15 @@
     <string name="account_description">Account Description</string>
     <string name="try_resetting_the_account_if_you_have_sync_issues">Try resetting the account if you have sync issues</string>
     <string name="removing_this_account_from_the_app_will_delete_any_local_data_stored_in_the_app">Removing this account from the app will delete any local data stored in the app</string>
+    <string name="back">back</string>
+    <string name="tue">TUE</string>
+    <string name="sun">SUN</string>
+    <string name="nov_2024">Nov 2024</string>
+    <string name="mon">MON</string>
+    <string name="wed">WED</string>
+    <string name="thur">THUR</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
 
     >>>>>>> testing
 </resources>

@@ -29,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lam_nhu"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_below="@+id/ava"
@@ -39,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nhutunglam1_gmail_com"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:layout_below="@+id/text1"
                 android:layout_centerHorizontal="true" />
@@ -56,6 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/account_description"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/icon_button"/>
@@ -66,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nhutunglam1_gmail_com"
+                android:textColor="@color/black"
                 android:layout_below="@id/account_description"
                 android:layout_alignParentStart="true"/>
 
@@ -104,6 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/block_external_images"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true" />
@@ -139,6 +144,7 @@
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
             android:text="@string/report_spam"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_marginTop="10dp"/>
 
@@ -148,6 +154,7 @@
             android:layout_height="wrap_content"
             android:paddingVertical="12dp"
             android:text="@string/categories"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:drawablePadding="60dp"
             android:layout_marginTop="10dp"/>
@@ -169,6 +176,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/try_resetting_the_account_if_you_have_sync_issues"
+            android:textColor="@color/black"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             />
@@ -188,7 +196,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/removing_this_account_from_the_app_will_delete_any_local_data_stored_in_the_app"/>
+            android:text="@string/removing_this_account_from_the_app_will_delete_any_local_data_stored_in_the_app"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 
