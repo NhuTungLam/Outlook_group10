@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_back"
+        android:contentDescription="Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/verificationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Check your email"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButton" />
+
+    <TextView
+        android:id="@+id/verifyText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="We sent a reset link to your account. Enter the 5-digit code sent to your email."
+        android:textSize="14sp"
+        android:textColor="#888888"
+        app:layout_constraintTop_toBottomOf="@id/verificationLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+
+    <LinearLayout
+        android:id="@+id/codeInputLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/verifyText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp">
+
+
+        <EditText
+            android:id="@+id/codeInput1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:gravity="center"
+            android:maxLength="1"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:textColor="#000000" />
+
+        <EditText
+            android:id="@+id/codeInput2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:gravity="center"
+            android:maxLength="1"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:layout_marginStart="8dp" />
+
+        <EditText
+            android:id="@+id/codeInput3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:gravity="center"
+            android:maxLength="1"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:layout_marginStart="8dp" />
+
+        <EditText
+            android:id="@+id/codeInput4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:gravity="center"
+            android:maxLength="1"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:layout_marginStart="8dp" />
+
+        <EditText
+            android:id="@+id/codeInput5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:gravity="center"
+            android:maxLength="1"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/verifycodeButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Verify code"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/blue_character"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/codeInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
