@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.button.MaterialButton;
 
 import vn.edu.usth.outlook.R;
-import vn.edu.usth.outlook.fragment.SignupFragment;
+import vn.edu.usth.outlook.activities.SignupActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,16 +44,19 @@ public class LoginActivity extends AppCompatActivity {
             String username = usernameEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
 
+            boolean validInput = true;
+
             // Check if username or password is empty
             if (username.isEmpty()) {
                 usernameEditText.setError("Please input username");
+                validInput = false;
             }
             if (password.isEmpty()) {
                 passwordEditText.setError("Please input password");
+                validInput = false;
             }
 
-
-            if (!username.isEmpty() && !password.isEmpty()) {
+            if (validInput) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -63,8 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // Handle signup redirection
     public void goToSignUp(View view) {
-        Intent intent = new Intent(this, SignupFragment.class);
+        Intent intent = new Intent(this, SignupActivity.class); // Start SignupActivity
         startActivity(intent);
     }
 }
-

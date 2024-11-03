@@ -69,12 +69,15 @@
                 android:layout_marginStart="8dp"
                 android:paddingTop="17dp"
                 android:textSize="20sp" />
+
             <EditText
+                android:id="@+id/receiverEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
                 android:paddingStart="40dp"
-                android:textSize="20sp"
-                android:inputType="textEmailAddress" />
+                android:textSize="20sp" />
+
             <ImageButton
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -86,12 +89,14 @@
                 android:id="@+id/row_down"/>
         </RelativeLayout>
         <EditText
+            android:id="@+id/subjectEditText"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:hint="@string/Subject"
             android:paddingHorizontal="10dp" />
 
         <EditText
+            android:id="@+id/contentEditText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
