@@ -173,10 +173,8 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
             public void onClick(View v) {
                 // Check if the navigation drawer on the start (left) side is open
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    // If it's open, close it
                     drawerLayout.closeDrawer(GravityCompat.START);
                 } else {
-                    // If it's not open, open it
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
             }

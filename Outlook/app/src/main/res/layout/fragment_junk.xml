@@ -22,7 +22,7 @@
             android:id="@+id/firstLineInJunk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nothing_in_junk"
+            android:text="nothing_in_junk"
             android:textSize="17sp"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
