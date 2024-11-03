@@ -12,4 +12,166 @@
 
 
 
+<<<<<<< Updated upstream
 </LinearLayout>
+=======
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ggicon"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_message"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="email@gmail.com" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Body Layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/to"
+                android:layout_marginStart="8dp"
+                android:paddingTop="17dp"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/receiverEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
+                android:paddingStart="40dp"
+                android:textSize="20sp" />
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/row_down"
+                android:contentDescription="@string/show_bcc_cc"
+                android:background="@color/white"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/row_down"/>
+        </RelativeLayout>
+        <EditText
+            android:id="@+id/subjectEditText"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="@string/Subject"
+            android:paddingHorizontal="10dp" />
+
+        <EditText
+            android:id="@+id/contentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="@string/Message"
+            android:gravity="start"
+            android:paddingHorizontal="10dp"
+            android:textAlignment="textStart" />
+    </LinearLayout>
+
+    <!-- Footer Layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/calendar"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            app:tint="@color/character_in_sidebar"
+            android:padding="20dp"
+            app:srcCompat="@drawable/plus_compose" />
+
+        <ImageButton
+            android:id="@+id/add"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            app:tint="@color/character_in_sidebar"
+            android:scaleType="center"
+            app:srcCompat="@drawable/insert_photo" />
+
+        <ImageButton
+            android:id="@+id/file"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            app:tint="@color/character_in_sidebar"
+            android:padding="20dp"
+            app:srcCompat="@drawable/insert_link" />
+
+        <ImageButton
+            android:id="@+id/shot"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            app:tint="@color/character_in_sidebar"
+            android:padding="20dp"
+            app:srcCompat="@drawable/font" />
+
+        <ImageButton
+            android:id="@+id/edit"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:padding="20dp"
+            app:tint="@color/character_in_sidebar"
+            app:srcCompat="@drawable/signature_create" />
+
+        <ImageButton
+            android:id="@+id/something"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:padding="20dp"
+            app:tint="@color/character_in_sidebar"
+            app:srcCompat="@drawable/insert_invitation" />
+
+        <ImageButton
+            android:id="@+id/btnSend"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/nav_item_background"
+            app:srcCompat="@drawable/send"
+            app:tint="@color/blue_theme"
+            android:tintMode="src_in"/>
+    </LinearLayout>
+
+</LinearLayout>
+>>>>>>> Stashed changes

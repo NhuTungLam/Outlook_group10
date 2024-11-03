@@ -6,5 +6,46 @@
     tools:context=".fragment.JunkFragment">
 
 
+<<<<<<< Updated upstream
+=======
+        <TextView
+            android:id="@+id/firstLineInJunk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nothing_in_junk"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/nothinginJunk"
+            android:fontFamily="@font/abadi_mt_bold"
+            >
+        </TextView>
+        <TextView
+            android:id="@+id/secondLineInJunk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/look_empty"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_below="@+id/firstLineInJunk"
+            android:layout_marginTop="10dp"
+            >
+        </TextView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.6"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/secondLineInJunk"
+            android:text="@string/go_to_inbox"
+            android:textColor="@color/blue_character"
+            android:background="@drawable/nav_item_background"
+            />
+    </RelativeLayout>
+>>>>>>> Stashed changes
 
 </FrameLayout>
