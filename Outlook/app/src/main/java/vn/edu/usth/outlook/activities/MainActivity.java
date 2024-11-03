@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,7 @@ import vn.edu.usth.outlook.fragment.ContactFragment;
 import vn.edu.usth.outlook.fragment.DeletedFragment;
 import vn.edu.usth.outlook.fragment.DraftFragment;
 import vn.edu.usth.outlook.fragment.JunkFragment;
+import vn.edu.usth.outlook.fragment.NotificationFragment;
 import vn.edu.usth.outlook.fragment.SentFragment;
 import vn.edu.usth.outlook.fragment.SettingsFragment;
 import vn.edu.usth.outlook.fragment.UnwantedFragment;
@@ -88,20 +90,40 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
         bottomAppBar = findViewById(R.id.bottomAppBar);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         ImageView searchIcon = findViewById(R.id.search_icon);
+        ImageButton notificationIcon = findViewById(R.id.notification_icon);
         searchView = findViewById(R.id.search_view);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ggicon);
+        // Lấy NavigationView và header view
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+
+        // Lấy nút đóng từ header view
+        ImageButton closeBtn = headerView.findViewById(R.id.btn_close_nav);
+        notificationIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new NotificationFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.drawer_layout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                findViewById(R.id.recycler_main).setVisibility(View.GONE);
 
 
+            }
+        });
         searchIcon.bringToFront();
         // Set onClickListener for the search icon to toggle SearchView visibility
         searchIcon.setOnClickListener(v -> {
             if (searchView.getVisibility() == View.GONE) {
                 searchView.setVisibility(View.VISIBLE);
                 searchView.requestFocus();
+                notificationIcon.setVisibility(View.GONE);
             } else {
                 searchView.setVisibility(View.GONE);
                 searchView.clearFocus();
+                notificationIcon.setVisibility(View.VISIBLE);
             }
         });
         searchIcon.setOnTouchListener((v, event) -> {
@@ -125,15 +147,25 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                 return true;
             }
         });
-        // Enable the Menu Icon to toggle the Menu Bar
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Đóng Navigation Drawer khi nhấn nút
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                // Thay đổi biểu tượng khi mở Drawer
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ggicon);
+            }
+        };
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-
-        View rootView = findViewById(android.R.id.content);
-        keyboardVisibilityUtils = new KeyboardVisibilityUtils(rootView, this);
-
+        // Đặt biểu tượng mong muốn ngay từ đầu (khi khởi động)
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ggicon);
 
         // Set a click listener for the navigation button in the toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -167,40 +199,55 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
 
                 if (item.getItemId() == R.id.inbox) {
                     recyclerView.setVisibility(View.VISIBLE);
-                    getSupportActionBar().setTitle("Inbox");
+                    notificationIcon.setVisibility(View.VISIBLE);
                     openFragment(new InboxFragment(),"Inbox");
                     return true;
                 } else if (item.getItemId() == R.id.draft) {
                     recyclerView.setVisibility(View.GONE);
+                    searchIcon.setVisibility(View.VISIBLE);
+                    notificationIcon.setVisibility(View.GONE);
                     openFragment(new DraftFragment(),"Draft");
                     return true;
                 } else if (item.getItemId() == R.id.settings) {
                     recyclerView.setVisibility(View.GONE);
+                    notificationIcon.setVisibility(View.GONE);
+                    searchIcon.setVisibility(View.INVISIBLE);
                     compose_button.setVisibility(View.GONE);
                     openFragment(new SettingsFragment(),"Settings");
                     return true;
                 } else if (item.getItemId() == R.id.sent) {
                     recyclerView.setVisibility(View.GONE);
+                    searchIcon.setVisibility(View.VISIBLE);
+                    notificationIcon.setVisibility(View.GONE);
                     openFragment(new SentFragment(),"Sent");
                     return true;
                 } else if (item.getItemId() == R.id.archive) {
                     recyclerView.setVisibility(View.INVISIBLE);
+                    searchIcon.setVisibility(View.VISIBLE);
+                    notificationIcon.setVisibility(View.GONE);
                     openFragment(new ArchiveFragment(),"Archive");
                     return true;
                 } else if (item.getItemId() == R.id.junk) {
                     recyclerView.setVisibility(View.GONE);
+                    notificationIcon.setVisibility(View.GONE);
                     openFragment(new JunkFragment(),"Junk");
                     return true;
                 } else if (item.getItemId() == R.id.sent) {
                     recyclerView.setVisibility(View.GONE);
+                    searchIcon.setVisibility(View.VISIBLE);
+                    notificationIcon.setVisibility(View.GONE);
                     openFragment(new SentFragment(),"Sent");
                     return true;
                 } else if (item.getItemId() == R.id.deleted) {
                     recyclerView.setVisibility(View.GONE);
+                    searchIcon.setVisibility(View.VISIBLE);
+                    notificationIcon.setVisibility(View.GONE);
                     openFragment(new DeletedFragment(),"Deleted");
                     return true;
                 } else if (item.getItemId() == R.id.unwanted) {
                     recyclerView.setVisibility(View.GONE);
+                    searchIcon.setVisibility(View.VISIBLE);
+                    notificationIcon.setVisibility(View.GONE);
                     openFragment(new UnwantedFragment(),"Unwanted");
                     return true;
                 }
@@ -216,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                 int itemId = item.getItemId();
                 if (itemId == R.id.home) {
                     recyclerView.setVisibility(View.VISIBLE);
-                    searchView.setVisibility(View.INVISIBLE);
+                    notificationIcon.setVisibility(View.VISIBLE);
                     searchView.setQueryHint(getString(R.string.search_in_mail));
                     compose_button.setText(R.string.New_mail);
                     compose_button.setIconResource(R.drawable.ic_compose);
@@ -225,8 +272,8 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                     return true;
                 } else if (itemId == R.id.contact) {
                     recyclerView.setVisibility(View.GONE);
-                    searchView.setVisibility(View.INVISIBLE);
-                    searchView.setQueryHint(getString(R.string.search_in_chat_and_spaces));
+                    notificationIcon.setVisibility(View.GONE);
+                    searchIcon.setVisibility(View.GONE);
                     compose_button.setIconResource(R.drawable.plus_compose);
                     compose_button.setText(R.string.new_contact);
                     compose_button.setVisibility(View.VISIBLE);
@@ -234,7 +281,8 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                     return true;
                 } else if (itemId == R.id.calendar) {
                     recyclerView.setVisibility(View.GONE);
-                    searchView.setVisibility(View.GONE);
+                    notificationIcon.setVisibility(View.GONE);
+                    searchIcon.setVisibility(View.VISIBLE);
                     compose_button.setIconResource(R.drawable.plus_compose);
                     compose_button.setVisibility(View.VISIBLE);
                     compose_button.setText(R.string.new_contact);
@@ -243,7 +291,8 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                 } else if (itemId == R.id.app_contact) {
                     currentFragment = new AppContactFragment();
                     recyclerView.setVisibility(View.GONE);
-                    searchView.setVisibility(View.GONE);
+                    searchIcon.setVisibility(View.GONE);
+                    notificationIcon.setVisibility(View.GONE);
                     compose_button.setVisibility(View.GONE);
                     openFragment(new AppContactFragment(),"App Contact");
                     return true;
@@ -302,18 +351,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
 
 
     }
-
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen((GravityCompat.START))) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-
     // Display items in RecyclerView
     private void displayItems() {
         recyclerView = findViewById(R.id.recycler_main);
@@ -336,8 +373,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
     ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
     itemTouchHelper.attachToRecyclerView(recyclerView);
     }
-
-
     //Swipe to do delete and archive
     Email_Sender deletedMail = null;
     List<String> archivedMail = new ArrayList<>();
@@ -371,23 +406,21 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                             }).show();
                     break;
                 case ItemTouchHelper.RIGHT:
-                    final Email_Sender email = emailList.get(position); // Corrected variable name
-                    archivedMail.add(String.valueOf(email)); // Use the correct list name
+                    final Email_Sender email = emailList.get(position);
+
+                    archivedMail.add(String.valueOf(email));
                     emailList.remove(position);
                     customAdapter.notifyItemRemoved(position);
 
-                    Snackbar make = Snackbar.make(recyclerView, email + ", Archived.", Snackbar.LENGTH_LONG);
-                    make.setAction("Undo", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            archivedMail.remove(archivedMail.lastIndexOf(email));
-                            emailList.add(position, email);
-                            customAdapter.notifyItemInserted(position);
-                        }
-                    });
-
-                    make.show();
-
+                    Snackbar.make(recyclerView,"Conversation Archived.", Snackbar.LENGTH_LONG)
+                            .setAction("Undo", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    archivedMail.remove(email);
+                                    emailList.add(position, email);
+                                    customAdapter.notifyItemInserted(position);
+                                }
+                            }).show();
                     break;
             }
 
@@ -409,16 +442,15 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
     public void onLongItemClick(int position) {
 
     }
-
-
     private void openFragment(Fragment fragment,String title) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
-
         // Set the toolbar title dynamically based on the fragment being opened
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
         }
     }
 }
+
+

@@ -5,10 +5,32 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ContactFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/contactimage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="150dp"
+            android:src="@drawable/icon_contact"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:id="@+id/firstLineInContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/you_have_no_contacts_yet"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/contactimage"
+            android:fontFamily="@font/abadi_mt_bold"
+            >
+        </TextView>
+
+    </RelativeLayout>
 
 </FrameLayout>

@@ -42,7 +42,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New message"
+                android:text="@string/new_message"
                 android:textSize="24sp" />
 
             <TextView
@@ -65,7 +65,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="To"
+                android:text="@string/to"
                 android:layout_marginStart="8dp"
                 android:paddingTop="17dp"
                 android:textSize="20sp" />
@@ -79,7 +79,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/row_down"
-                android:contentDescription="Show BCC,CC"
+                android:contentDescription="@string/show_bcc_cc"
                 android:background="@color/white"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
@@ -88,14 +88,14 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="Subject"
+            android:hint="@string/Subject"
             android:paddingHorizontal="10dp" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:hint="Message"
+            android:hint="@string/Message"
             android:gravity="start"
             android:paddingHorizontal="10dp"
             android:textAlignment="textStart" />

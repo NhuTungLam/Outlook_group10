@@ -30,7 +30,7 @@
             android:src="@drawable/more_vert"
             android:id="@+id/more"
             android:background="@drawable/nav_item_background"
-            android:contentDescription="More"
+            android:contentDescription="@string/More"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:onClick="morePopup"/>
@@ -45,6 +45,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_toStartOf="@+id/more"
             android:background="@drawable/archive"
+            android:src="@drawable/nav_item_background"
             />
 
         <ImageButton

@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="Move to folder"
+        android:title="@string/move_to_folder"
         android:id="@+id/move_to_folder"/>
     <item
-        android:title="Move to Other"
+        android:title="@string/move_to_other"
         android:id="@+id/move_to_other"/>
     <item
-        android:title="Report junk"
+        android:title="@string/report_junk"
         android:id="@+id/report_junk"/>
     <item
-        android:title="Ignore conversation"
+        android:title="@string/ignore_conversation"
         android:id="@+id/ignore_conversation"/>
     <item
-        android:title="Forward as attachment"
+        android:title="@string/forward_as_attachment"
         android:id="@+id/forward_as_attachment"/>
     <item
-        android:title="Mark as unread"
+        android:title="@string/mark_as_unread"
         android:id="@+id/mark_as_unread"/>
     <item
-        android:title="Frag"
+        android:title="@string/frag"
         android:id="@+id/frag"/>
     <item
-        android:title="Pin"
+        android:title="@string/pin"
         android:id="@+id/pin"/>
     <item
-        android:title="Snooze"
+        android:title="@string/snooze"
         android:id="@+id/snooze"/>
 </menu>

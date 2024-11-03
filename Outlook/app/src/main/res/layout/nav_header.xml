@@ -2,24 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_all">
+    android:background="@color/background_all"
+    android:layout_marginTop="20dp">
 
-    <!-- User profile picture -->
-    <ImageView
-        android:id="@+id/nav_header_image"
-        android:layout_width="50dp"
+    <ImageButton
+        android:id="@+id/btn_close_nav"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ggicon"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="30dp"
-        android:contentDescription="Profile Picture"
-        android:background="@color/background_all"
-        android:backgroundTint="@color/white"
-        android:padding="5dp"/>
-
-    <!-- User name -->
-
-    <!-- Email or other details -->
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Close Drawer"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ggicon" />
 
     <TextView
         android:id="@+id/nav_header_username"
@@ -27,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="64dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:text="Google"
         android:textColor="@color/character_in_sidebar"
         android:textSize="30sp" />
@@ -39,7 +33,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/nav_header_username"
         android:layout_marginTop="5dp"
-        android:text="johndoe@example.com"
+        android:text="nhutunglam@gmail.com"
         android:textColor="@color/character_in_sidebar"
         android:textSize="14sp" />
 </RelativeLayout>

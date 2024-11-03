@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Outlook</string>
+    <string name="navigation_drawer_open">Mở thanh điều hướng</string>
+    <string name="navigation_drawer_close">Đóng thanh điều hướng</string>
+    <string name="mail">Thư</string>
+    <string name="calendar">lịch</string>
+    <string name="contact">Danh bạ</string>
+    <string name="home">Trang chủ</string>
+    <string name="meet">Cuộc họp</string>
+    <string name="file">Tệp</string>
+    <string name="Email">Thư</string>
+    <string name="new_contact">Liên hệ mới</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_in_mail">Tìm kiếm thư</string>
+    <string name="compose">Soạn thảo</string>
+    <string name="search_in_chat_and_spaces">Tìm kếm hội thoại và không gian\n</string>
+    <string name="new_space">Không gian mới</string>
+    <string name="app_contact">Tất cả ứng dụng</string>
+    <string name="lam_nhu">lam nhu</string>
+    <string name="nhutunglam1_gmail_com">nhutunglam1@gmail.com</string>
+    <string name="mail_calendar">Thư &amp; Lịch</string>
+    <string name="block_external_images">Chặn hình ảnh</string>
+    <string name="report_spam">Báo cáo spam</string>
+    <string name="categories">Thể loại</string>
+    <string name="reset_account">Khởi động lại tài khoản</string>
+    <string name="remove_account">Loại bỏ tài khoản</string>
+    <string name="avatar">Ảnh đại diện</string>
+    <string name="New_mail">Thư mới</string>
+    <string name="Name">Tên</string>
+    <string name="Head_Mail">Tiêu đề</string>
+    <string name="Content">Nội dung</string>
+    <string name="new_message">Tin nhắn mới</string>
+    <string name="to">Tới</string>
+    <string name="show_bcc_cc">Hiện BCC,CC</string>
+    <string name="Subject">Chủ đề</string>
+    <string name="Message">Tin nhắn</string>
+    <string name="More">Thêm</string>
+    <string name="Notification">Thông báo</string>
+    <string name="Search">Tìm kiếm</string>
+    <string name="nothing_in_archive">Không có gì trong Lưu trữ</string>
+    <string name="in_archive">Dọn sạch hôp thư đến của bạn bằn\ncách di chuyển tin nhắn sang Lưu trữ</string>
+    <string name="go_to_inbox">ĐI ĐẾN HỘP THƯ ĐẾN</string>
+    <string name="nothing_in_deleted">Không có gì trong Đã xóa</string>
+    <string name="look_empty">Có vẻ ở đây chưa có nội dung gì</string>
+    <string name="nothing_in_draft">Không có gì trong Nháp</string>
+    <string name="start_writing">Bắt đầu viết những nội dung thật hay</string>
+    <string name="Nothing_in_Unwanted">Không có gì trong Không mong muốn</string>
+    <string name="nothing_in_junk">Không có gì trong thư rác</string>
+    <string name="Inbox">Hộp thư đến</string>
+    <string name="Drafts">Nháp</string>
+    <string name="Archive">Lưu trữ</string>
+    <string name="Junk">Thư rác</string>
+    <string name="Sent">Đã gửi</string>
+    <string name="Deleted">Đã xóa</string>
+    <string name="Unwanted">Không mong muốn</string>
+    <string name="Settings">Cài đặt</string>
+    <string name="move_to_folder">Di chuyển đến thư mục</string>
+    <string name="move_to_other">Di chuyên đến nơi khác</string>
+    <string name="report_junk">Báo cáo thư rác</string>
+    <string name="ignore_conversation">Bỏ qua đoạn hội thoại</string>
+    <string name="forward_as_attachment">Chuyển tiêp dạng đính kèm</string>
+    <string name="mark_as_unread">Đánh dấu đã đọc</string>
+    <string name="frag">Đánh dấu</string>
+    <string name="pin">Ghim</string>
+    <string name="snooze">Hàng chờ</string>
+    <string name="Forward">Chuyển tiếp</string>
+    <string name="print">In</string>
+    <string name="Reply">Phản hồi</string>
+
+    <string name="pinned">Đã ghim</string>
+    <string name="more_apps">Các ứng dụng khác</string>
+<!--separate-->
+
+    <string name="question_con">Question con</string>
+    <string name="account_description">Account Description</string>
+    <string name="try_resetting_the_account_if_you_have_sync_issues">Try resetting the account if you have sync issues</string>
+
+    =======
+
+    <string name="you_have_no_contacts_yet">Không có liên hệ</string>
+    <string name="No_new_notifications">Không có thông báo mới</string>
+    <string name="Please_check_back_later">Vui lòng kiểm tra lại sau</string>
+    <string name="removing_this_account_from_the_app_will_delete_any_local_data_stored_in_the_app">Loại bỏ tài khoản trong ứng dụng sẽ xóa các lưu trữ cục bộ</string>
+
+    <!--testing-->
+</resources>
