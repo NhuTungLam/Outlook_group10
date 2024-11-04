@@ -164,7 +164,6 @@ public class SignupActivity extends AppCompatActivity {
         invalidConfirmPass.setVisibility(View.GONE);
     }
 
-
     public void goToLogin(View view) {
         Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
         startActivity(intent);
