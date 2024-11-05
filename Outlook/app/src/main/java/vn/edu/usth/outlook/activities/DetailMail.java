@@ -21,7 +21,7 @@ import java.util.List;
 
 import vn.edu.usth.outlook.Email_Sender;
 import vn.edu.usth.outlook.R;
-import vn.edu.usth.outlook.db.DatabaseHelper; // Import your database helper
+import vn.edu.usth.outlook.database.DatabaseHelper;
 import vn.edu.usth.outlook.listener.OnSwipeTouchListener;
 
 public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
