@@ -98,9 +98,10 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            // Nếu thông tin không khớp, hiển thị thông báo lỗi
-            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+        } else if (!databaseHelper.checkUserCredentials(username, password)) {
+            Toast.makeText(this, "Sai tên đăng nhập hoặc mật khẩu. Vui lòng kiểm tra lại.", Toast.LENGTH_SHORT).show();
+        } else if (!databaseHelper.hasUsers()) {
+            Toast.makeText(this, "Hiện tại chưa có tài khoản nào. Vui lòng đăng ký.", Toast.LENGTH_SHORT).show();
         }
     }
 

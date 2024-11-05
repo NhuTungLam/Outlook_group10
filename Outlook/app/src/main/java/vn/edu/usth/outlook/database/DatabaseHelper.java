@@ -17,6 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_USERNAME = "USERNAME";
     private static final String COL_PHONE = "PHONE";
     private static final String COL_PASSWORD = "PASSWORD";
+    private static final String SALT = "your_unique_salt";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -87,39 +88,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean checkUserCredentials(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{username, password});
+        try {
+            String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_USERNAME + " = ? AND " + COL_PASSWORD + " = ?";
+            Cursor cursor = db.rawQuery(query, new String[]{username, password});
 
-        boolean isValid = cursor.getCount() > 0; // Kiểm tra nếu có bản ghi khớp
-        cursor.close();
-        return isValid;
+            boolean isValid = cursor.getCount() > 0;
+            if (!isValid) {
+                Log.e("DatabaseHelper", "Invalid username or password: " + username);
+            } else {
+                Log.e("DatabaseHelper", "User credentials are valid");
+            }
+            cursor.close();
+            return isValid;
+        } catch (Exception e) {
+            Log.e("DatabaseHelper", "Error checking user credentials: " + e.getMessage());
+            return false;
+        }
     }
+
+
 
     public boolean hasUsers() {
         try {
             SQLiteDatabase db = this.getReadableDatabase();
-
-            // Check if table exist
-            Cursor tableCursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='users'", null);
+            Cursor tableCursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TABLE_NAME + "'", null);
             if (tableCursor != null) {
                 boolean tableExists = tableCursor.getCount() > 0;
                 tableCursor.close();
                 if (!tableExists) {
-                    return false; // Bảng chưa tồn tại
+                    Log.e("DatabaseHelper", "Table '" + TABLE_NAME + "' does not exist");
+                    return false;
                 }
             }
-
-            // check if have user in table
-            Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM users", null);
+            Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null);
             if (cursor != null && cursor.moveToFirst()) {
                 int count = cursor.getInt(0);
                 cursor.close();
+                if (count == 0) {
+                    Log.e("DatabaseHelper", "No users found in the database");
+                } else {
+                    Log.e("DatabaseHelper", "Number of users in the database: " + count);
+                }
                 return count > 0;
+            } else {
+                Log.e("DatabaseHelper", "Failed to retrieve user count");
             }
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("DatabaseHelper", "Error checking users: " + e.getMessage());
             return false;
         }
     }
+
+
 }
