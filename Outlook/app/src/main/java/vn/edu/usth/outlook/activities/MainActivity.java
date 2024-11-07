@@ -2,6 +2,7 @@ package vn.edu.usth.outlook.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,6 +22,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,6 +75,24 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /* Lấy đối tượng SharedPreferences mặc định (truy cập file SharedPreferences mặc định của ứng dụng, file này
+         luôn có sẵn trong android studio, là một hệ thống lưu trữ nhỏ gọn (key-value pair)*/
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        // lấy trạng thái đăng nhập và nhận ra trạng thái đăng nhập qua key "isLoggedIn" đã edit ở class Login activity
+
+        /*đặt mặc định ở main activity là false để bảo đảm rằng ứng dụng có thể xử lý tình huống khi không có thông tin
+        trạng thái đăng nhập nào được lưu trữ, Nó giúp tránh lỗi hoặc hành vi không mong muốn khi người dùng mở
+        ứng dụng lần đầu tiên hoặc sau khi đăng xuất.*/
+
+        boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+        if (!isLoggedIn)  { // lấy giá trị được lưu, cụ thể ở đây là lấy giá trị ở login
+            // Nếu chưa đăng nhập, chuyển đến LoginActivity
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return; // Dừng thực hiện các lệnh sau
+        }
 
         //Change status bar background to the corresponding
         Window window = getWindow();
@@ -248,6 +268,17 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                     notificationIcon.setVisibility(View.GONE);
                     openFragment(new UnwantedFragment(),"Unwanted");
                     return true;
+                } else if (item.getItemId() == R.id.logout) {
+                    // Xóa trạng thái đăng nhập
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("isLoggedIn", false);
+                    editor.apply();
+
+                    // Chuyển về LoginActivity
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 return false;
             }
