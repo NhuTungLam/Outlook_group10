@@ -141,17 +141,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:id="@+id/reply_button"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="50dp"
-            android:background="@drawable/nav_item_background"
-            android:drawableStart="@drawable/turn_left"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/turn_left"
             android:text="@string/Reply"
+            android:textColor="@color/black"
             android:textAlignment="textStart"
             android:drawablePadding="15dp"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

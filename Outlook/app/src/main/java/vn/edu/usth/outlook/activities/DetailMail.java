@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -62,12 +63,18 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
         //back to mainpage
 
         ImageButton backIcon = findViewById(R.id.back_icon);
+        Button replyIcon = findViewById(R.id.reply_button);
         backIcon.setOnClickListener(v -> {
             // Create an Intent to navigate to the previous activity or fragment
             Intent intent = new Intent(DetailMail.this, MainActivity.class);
             startActivity(intent);
 
             // Optionally, finish the current activity to remove it from the stack
+            finish();
+        });
+        replyIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(DetailMail.this, ComposeActivity.class);
+            startActivity(intent);
             finish();
         });
 
