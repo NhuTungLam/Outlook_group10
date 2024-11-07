@@ -173,10 +173,8 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
             public void onClick(View v) {
                 // Check if the navigation drawer on the start (left) side is open
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    // If it's open, close it
                     drawerLayout.closeDrawer(GravityCompat.START);
                 } else {
-                    // If it's not open, open it
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
             }
@@ -265,6 +263,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                     recyclerView.setVisibility(View.VISIBLE);
                     notificationIcon.setVisibility(View.VISIBLE);
                     searchView.setQueryHint(getString(R.string.search_in_mail));
+                    searchIcon.setVisibility(View.VISIBLE);
                     compose_button.setText(R.string.New_mail);
                     compose_button.setIconResource(R.drawable.ic_compose);
                     compose_button.setVisibility(View.VISIBLE);

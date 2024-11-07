@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    tools:context=".activities.SignupActivity">
 
     <ImageView
         android:id="@+id/signupImage"
@@ -37,18 +37,12 @@
             android:autofillHints="emailAddress"
             android:hint="@string/Email"
             android:inputType="textEmailAddress" />
-        <TextView
-            android:id="@+id/newEmailError"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/please_input_email"
-            android:textColor="@android:color/holo_red_light"
-            android:visibility="gone"/>
+
         <TextView
             android:id="@+id/invalidEmailError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Invalid email"
+            android:text="@string/invalid_email"
             android:textColor="@android:color/holo_red_light"
             android:visibility="gone" />
 
@@ -61,13 +55,6 @@
             android:autofillHints="phone"
             android:hint="@string/phone_number"
             android:inputType="phone" />
-        <TextView
-            android:id="@+id/phoneNumberError"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/please_input_phone_number"
-            android:textColor="@android:color/holo_red_light"
-            android:visibility="gone" />
         <TextView
             android:id="@+id/invalidPhoneNumber"
             android:layout_width="wrap_content"
@@ -102,17 +89,10 @@
             android:hint="@string/password"
             android:inputType="textPassword" />
         <TextView
-            android:id="@+id/passwordError"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/please_input_password"
-            android:textColor="@android:color/holo_red_light"
-            android:visibility="gone" />
-        <TextView
             android:id="@+id/invalidPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/invalid_password"
+            android:text="@string/invalid_password_format"
             android:textColor="@android:color/holo_red_light"
             android:visibility="gone" />
 
@@ -125,17 +105,10 @@
             android:hint="@string/confirm_password"
             android:inputType="textPassword" />
         <TextView
-            android:id="@+id/confirmPasswordError"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/please_confirm_password"
-            android:textColor="@android:color/holo_red_light"
-            android:visibility="gone" />
-        <TextView
             android:id="@+id/invalidConfirmPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/invalid_confirm_email"
+            android:text="@string/passwords_do_not_match"
             android:textColor="@android:color/holo_red_light"
             android:visibility="gone" />
 
@@ -155,19 +128,19 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="Log in"
-                android:textColor="@android:color/holo_blue_dark"
-                android:onClick="goToLogin"/>
+                android:text="@string/log_in"
+                android:textColor="@android:color/holo_blue_dark" />
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/signupButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign up"
+            android:text="@string/sign_up"
             android:textColor="#FFFFFF"
             android:backgroundTint="@color/blue_character"
             app:cornerRadius="16dp"
             android:padding="12dp" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,6 +40,7 @@
     <string name="Notification">Notification</string>
     <string name="Search">Search</string>
     <string name="nothing_in_archive">Nothing in Archive</string>
+    <string name="nothing_in_junk">Nothing in junk</string>
     <string name="in_archive">Clean up your inbox by\nmoving messages to Archive</string>
     <string name="go_to_inbox">GO TO INBOX</string>
     <string name="nothing_in_deleted">Nothing in Deleted</string>
@@ -115,6 +116,11 @@
     <string name="already_have_account">Already have account?</string>
     <string name="invalid_phone_number">Invalid phone number</string>
     <string name="invalid_confirm_email">Invalid confirm email</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="username_not_exist">username not exist</string>
+    <string name="incorect_password">incorect password</string>
+    <string name="invalid_password_format">Invalid password format</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
 
     >>>>>>> testing
 </resources>
