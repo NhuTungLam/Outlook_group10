@@ -6,6 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+import android.database.Cursor;
+import vn.edu.usth.outlook.Email_Sender;
+import vn.edu.usth.outlook.Email_Sent;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database and Table names
@@ -140,7 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert("emails", null, values);
         db.close();
 
-        return result != -1;  // Trả về true nếu chèn thành công
+        return result != -1;  // Tráº£ vá» true náº¿u chÃ¨n thÃ nh cÃ´ng
     }
 
 
@@ -169,5 +175,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         boolean hasUsers = cursor.moveToFirst() && cursor.getInt(0) > 0;
         cursor.close();
         return hasUsers;
+    }
+    public List<Email_Sent> getSentEmails(String senderEmail) {
+        List<Email_Sent> emailList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Query to fetch sent emails where the sender matches the current user
+        String query = "SELECT * FROM " + TABLE_EMAIL + " WHERE " + COL_SENDER + " = ? ORDER BY " + COL_TIMESTAMP + " DESC";
+        Cursor cursor = db.rawQuery(query, new String[]{senderEmail});
+
+        // Populate the emailList with email data
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COL_SENT_EMAIL_ID));
+                String sender = cursor.getString(cursor.getColumnIndexOrThrow(COL_SENDER));
+                String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
+                String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
+                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_Content));
+                String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(COL_TIMESTAMP));
+                int isRead = cursor.getInt(cursor.getColumnIndexOrThrow(COL_IS_READ));
+
+                // Create an Email_Sender object and add to list
+                Email_Sent email = new Email_Sent(sender, receiver, subject, content);
+                emailList.add(email);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return emailList;
     }
 }
