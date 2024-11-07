@@ -3,6 +3,7 @@ package vn.edu.usth.outlook.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import androidx.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -59,12 +60,22 @@ public class LoginActivity extends AppCompatActivity {
         finish(); // Optionally finish this activity
     }
 
+    public void goToForgotPass(View view) {
+        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     // Method to handle login logic
     private void handleLogin() {
+        // Get user input and remove extra spaces
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
+
+        // Reset the display state of all error messages
         resetLoginErrorMessages();
 
+        // Check if username or password is blank
         boolean hasError = false;
 
         if (username.isEmpty()) {
@@ -78,36 +89,43 @@ public class LoginActivity extends AppCompatActivity {
             hasError = true;
         }
 
+        // If there is an error, do not continue logging in
         if (hasError) {
             return;
         }
 
+        // Check if the database has any users
         if (!databaseHelper.hasUsers()) {
             Toast.makeText(this, "No accounts found. Please sign up.", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // If both the username and password are valid, proceed to check the login information.
         if (databaseHelper.checkUserCredentials(username, password)) {
-            // Lấy email của người dùng từ cơ sở dữ liệu
-            String userEmail = databaseHelper.getUserEmailByUsername(username);
-
-            // Lưu email vào SharedPreferences
-            SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+             /* Lấy đối tượng SharedPreferences đặt giá trị mặc định (truy cập file SharedPreferences),
+             dùng editor mới không phải giá trị mặc dịnh*/
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("loggedInEmail", userEmail); // lưu email của tài khoản hiện tại
+            editor.putBoolean("isLoggedIn", true);
             editor.apply();
-
-            // Chuyển đến MainActivity sau khi đăng nhập thành công
+            // If the information matches, allow login and go to MainActivity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            Toast.makeText(this, "Sai tên đăng nhập hoặc mật khẩu. Vui lòng kiểm tra lại.", Toast.LENGTH_SHORT).show();
+        } else if (!databaseHelper.checkUserCredentials(username, password)) {
+            Toast.makeText(this, "Wrong username or password. Please check again.", Toast.LENGTH_SHORT).show();
+        } else if (!databaseHelper.hasUsers()) {
+            Toast.makeText(this, "No account yet. Please register.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void resetLoginErrorMessages() {
+        // Reset error messages to their original state and hide them
+        notInputUsername.setText("");
         notInputUsername.setVisibility(View.GONE);
+
+        notInputPassword.setText("");
         notInputPassword.setVisibility(View.GONE);
     }
+
 }

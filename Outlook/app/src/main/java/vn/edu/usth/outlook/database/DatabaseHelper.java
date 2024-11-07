@@ -5,169 +5,139 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // Database and Table names
     private static final String DATABASE_NAME = "users.db";
-    private static final int DATABASE_VERSION = 2;
-
-    // User Table
-    private static final String TABLE_USER = "user";
-    private static final String COL_USER_ID = "ID";
+    private static final String TABLE_NAME = "user";
+    private static final String COL_ID = "ID";
     private static final String COL_EMAIL = "EMAIL";
     private static final String COL_USERNAME = "USERNAME";
     private static final String COL_PHONE = "PHONE";
     private static final String COL_PASSWORD = "PASSWORD";
 
-    // Email Table
-    private static final String TABLE_EMAIL = "emails";
-    private static final String COL_SENT_EMAIL_ID = "sent_email_id";
-    private static final String COL_SENDER = "sender";
-    private static final String COL_RECEIVER = "receiver";
-    private static final String COL_SUBJECT = "subject";
-    private static final String COL_Content = "content";
-    private static final String COL_TIMESTAMP = "timestamp";
-    private static final String COL_IS_READ = "is_read";
-
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Create User Table
-        db.execSQL("CREATE TABLE " + TABLE_USER + " (" +
-                COL_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
+                COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_EMAIL + " TEXT, " +
                 COL_USERNAME + " TEXT, " +
                 COL_PHONE + " TEXT, " +
                 COL_PASSWORD + " TEXT" +
                 ")");
-
-        // Create Email Table
-        db.execSQL("CREATE TABLE " + TABLE_EMAIL + " (" +
-                COL_SENT_EMAIL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL_SENDER + " TEXT, " +
-                COL_RECEIVER + " TEXT, " +
-                COL_SUBJECT + " TEXT, " +
-                COL_Content + " TEXT, " +
-                COL_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
-                COL_IS_READ + " INTEGER DEFAULT 0" +  // 0 = unread, 1 = read
-                ")");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EMAIL);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
-    // Insert new user into the User table
+    // Insert user into database
     public boolean insertUser(String email, String username, String phone, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_EMAIL, email);
         contentValues.put(COL_USERNAME, username);
         contentValues.put(COL_PHONE, phone);
-        contentValues.put(COL_PASSWORD, password);
-        long result = db.insert(TABLE_USER, null, contentValues);
-        db.close();
+        contentValues.put(COL_PASSWORD, password); // Nên mã hóa mật khẩu
+        long result = db.insert(TABLE_NAME, null, contentValues);
+        db.close(); // Đóng db sau khi thực hiện
         return result != -1;
-    }
-    // Get the email of a user based on their username
-    public String getUserEmailByUsername(String username) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT " + COL_EMAIL + " FROM " + TABLE_USER + " WHERE " + COL_USERNAME + " = ?", new String[]{username});
-
-        if (cursor.moveToFirst()) {
-            String email = cursor.getString(0);
-            cursor.close();
-            return email;
-        } else {
-            cursor.close();
-            return null;
-        }
     }
 
     // Check if email already exists
     public boolean checkEmailExists(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USER + " WHERE " + COL_EMAIL + " = ?", new String[]{email});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_EMAIL + " = ?", new String[]{email});
         boolean exists = cursor.getCount() > 0;
-        cursor.close();
+        cursor.close(); // Đóng con trỏ sau khi sử dụng
         return exists;
     }
 
-    // Check if username already exists
     public boolean checkUsernameExists(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USER + " WHERE " + COL_USERNAME + " = ?", new String[]{username});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_USERNAME + " = ?", new String[]{username});
         boolean exists = cursor.getCount() > 0;
-        cursor.close();
+        cursor.close(); // Đóng con trỏ sau khi sử dụng
         return exists;
     }
 
-    // Check if phone already exists
     public boolean checkPhoneExists(String phone) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USER + " WHERE " + COL_PHONE + " = ?", new String[]{phone});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_PHONE + " = ?", new String[]{phone});
         boolean exists = cursor.getCount() > 0;
-        cursor.close();
+        cursor.close(); // Đóng con trỏ sau khi sử dụng
         return exists;
     }
 
-    // Verify user credentials for login
+    public boolean checkPasswordExists(String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_PASSWORD + " = ?", new String[]{password});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close(); // Đóng con trỏ sau khi sử dụng
+        return exists;
+    }
+
     public boolean checkUserCredentials(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + TABLE_USER + " WHERE " + COL_USERNAME + " = ? AND " + COL_PASSWORD + " = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{username, password});
-        boolean isValid = cursor.getCount() > 0;
-        cursor.close();
-        return isValid;
-    }
+        try {
+            String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_USERNAME + " = ? AND " + COL_PASSWORD + " = ?";
+            Cursor cursor = db.rawQuery(query, new String[]{username, password});
 
-    // Send an email
-    public boolean sendEmail(String sender, String receiver, String subject, String content) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("sender", sender);
-        values.put("receiver", receiver);
-        values.put("subject", subject);
-        values.put("content", content);
-
-        long result = db.insert("emails", null, values);
-        db.close();
-
-        return result != -1;  // Trả về true nếu chèn thành công
+            boolean isValid = cursor.getCount() > 0;
+            if (!isValid) {
+                Log.e("DatabaseHelper", "Invalid username or password: " + username);
+            } else {
+                Log.e("DatabaseHelper", "User credentials are valid");
+            }
+            cursor.close();
+            return isValid;
+        } catch (Exception e) {
+            Log.e("DatabaseHelper", "Error checking user credentials: " + e.getMessage());
+            return false;
+        }
     }
 
 
-    // Retrieve emails for a specific user (inbox)
-    public Cursor getUserEmails(String receiver) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_EMAIL +
-                " WHERE " + COL_RECEIVER + " = ?" +
-                " ORDER BY " + COL_TIMESTAMP + " DESC", new String[]{receiver});
-    }
 
-    // Mark email as read
-    public boolean markEmailAsRead(int emailId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_IS_READ, 1); // 1 indicates read
-        int result = db.update(TABLE_EMAIL, contentValues, COL_SENT_EMAIL_ID + " = ?", new String[]{String.valueOf(emailId)});
-        db.close();
-        return result > 0;
-    }
-
-    // Check if the user table has any users (for initial setup)
     public boolean hasUsers() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_USER, null);
-        boolean hasUsers = cursor.moveToFirst() && cursor.getInt(0) > 0;
-        cursor.close();
-        return hasUsers;
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor tableCursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TABLE_NAME + "'", null);
+            if (tableCursor != null) {
+                boolean tableExists = tableCursor.getCount() > 0;
+                tableCursor.close();
+                if (!tableExists) {
+                    Log.e("DatabaseHelper", "Table '" + TABLE_NAME + "' does not exist");
+                    return false;
+                }
+            }
+            Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int count = cursor.getInt(0);
+                cursor.close();
+                if (count == 0) {
+                    Log.e("DatabaseHelper", "No users found in the database");
+                } else {
+                    Log.e("DatabaseHelper", "Number of users in the database: " + count);
+                }
+                return count > 0;
+            } else {
+                Log.e("DatabaseHelper", "Failed to retrieve user count");
+            }
+            return false;
+        } catch (Exception e) {
+            Log.e("DatabaseHelper", "Error checking users: " + e.getMessage());
+            return false;
+        }
     }
+
+
 }
