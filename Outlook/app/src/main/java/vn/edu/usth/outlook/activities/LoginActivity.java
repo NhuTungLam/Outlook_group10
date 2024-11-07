@@ -1,6 +1,7 @@
 package vn.edu.usth.outlook.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -60,14 +61,10 @@ public class LoginActivity extends AppCompatActivity {
 
     // Method to handle login logic
     private void handleLogin() {
-        // Lấy thông tin nhập từ người dùng và loại bỏ khoảng trắng thừa
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
-
-        // Đặt lại trạng thái hiển thị của tất cả các thông báo lỗi
         resetLoginErrorMessages();
 
-        // Kiểm tra nếu tên đăng nhập hoặc mật khẩu bị bỏ trống
         boolean hasError = false;
 
         if (username.isEmpty()) {
@@ -81,37 +78,36 @@ public class LoginActivity extends AppCompatActivity {
             hasError = true;
         }
 
-        // Nếu có lỗi, không tiếp tục đăng nhập
         if (hasError) {
             return;
         }
 
-        // Kiểm tra xem cơ sở dữ liệu có bất kỳ người dùng nào không
         if (!databaseHelper.hasUsers()) {
             Toast.makeText(this, "No accounts found. Please sign up.", Toast.LENGTH_SHORT).show();
-            return; // Dừng lại nếu chưa có tài khoản
+            return;
         }
 
-        // Nếu cả tên đăng nhập và mật khẩu đều hợp lệ, tiến hành kiểm tra thông tin đăng nhập
         if (databaseHelper.checkUserCredentials(username, password)) {
-            // Nếu thông tin khớp, cho phép đăng nhập và chuyển đến MainActivity
+            // Lấy email của người dùng từ cơ sở dữ liệu
+            String userEmail = databaseHelper.getUserEmailByUsername(username);
+
+            // Lưu email vào SharedPreferences
+            SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("loggedInEmail", userEmail); // lưu email của tài khoản hiện tại
+            editor.apply();
+
+            // Chuyển đến MainActivity sau khi đăng nhập thành công
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-        } else if (!databaseHelper.checkUserCredentials(username, password)) {
+        } else {
             Toast.makeText(this, "Sai tên đăng nhập hoặc mật khẩu. Vui lòng kiểm tra lại.", Toast.LENGTH_SHORT).show();
-        } else if (!databaseHelper.hasUsers()) {
-            Toast.makeText(this, "Hiện tại chưa có tài khoản nào. Vui lòng đăng ký.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void resetLoginErrorMessages() {
-        // Đặt lại thông báo lỗi về trạng thái ban đầu và ẩn chúng
-        notInputUsername.setText("Please input username");
         notInputUsername.setVisibility(View.GONE);
-
-        notInputPassword.setText("Please input password");
         notInputPassword.setVisibility(View.GONE);
     }
-
 }
