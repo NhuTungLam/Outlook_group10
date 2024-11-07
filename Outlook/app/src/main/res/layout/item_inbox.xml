@@ -64,15 +64,15 @@
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="robotolight"
             android:layout_below="@+id/head_email"
-            android:layout_toRightOf="@+id/imageview"
             android:layout_marginLeft="-5dp"
-            android:text="@string/Content"
-            android:textSize="14dp"
-            android:maxLines="1"
+            android:layout_toRightOf="@+id/imageview"
             android:ellipsize="end"
-            android:textColor="@color/black" />
+            android:fontFamily="robotolight"
+            android:maxLines="1"
+            android:text="@string/Content"
+            android:textColor="@color/black"
+            android:textSize="14dp" />
 
     </RelativeLayout>
 
