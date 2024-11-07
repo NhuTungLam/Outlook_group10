@@ -76,6 +76,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result != -1;
     }
+    // Get the email of a user based on their username
+    public String getUserEmailByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + COL_EMAIL + " FROM " + TABLE_USER + " WHERE " + COL_USERNAME + " = ?", new String[]{username});
+
+        if (cursor.moveToFirst()) {
+            String email = cursor.getString(0);
+            cursor.close();
+            return email;
+        } else {
+            cursor.close();
+            return null;
+        }
+    }
 
     // Check if email already exists
     public boolean checkEmailExists(String email) {
@@ -116,15 +130,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Send an email
     public boolean sendEmail(String sender, String receiver, String subject, String content) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("sender", sender);
         values.put("receiver", receiver);
         values.put("subject", subject);
         values.put("content", content);
 
-        long newRowId = getWritableDatabase().insert("emails", null, values);
-        return newRowId != -1; // Return true if insertion was successful
+        long result = db.insert("emails", null, values);
+        db.close();
+
+        return result != -1;  // Trả về true nếu chèn thành công
     }
+
 
     // Retrieve emails for a specific user (inbox)
     public Cursor getUserEmails(String receiver) {
