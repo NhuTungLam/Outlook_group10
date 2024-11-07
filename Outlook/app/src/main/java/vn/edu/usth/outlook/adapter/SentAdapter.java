@@ -12,16 +12,16 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-
-import vn.edu.usth.outlook.Email_Sender;
+import vn.edu.usth.outlook.Email_Sent;
 import vn.edu.usth.outlook.R;
 import vn.edu.usth.outlook.listener.SelectListener;
 
 public class SentAdapter extends RecyclerView.Adapter<SentAdapter.CustomViewHolder> {
-    Context context;
-    List<Email_Sender> list;
+    private Context context;
+    private List<Email_Sent> list;
     private final SelectListener listener;
-    public SentAdapter(Context context, List<Email_Sender> list, SelectListener listener) {
+
+    public SentAdapter(Context context, List<Email_Sent> list, SelectListener listener) {
         this.context = context;
         this.list = list;
         this.listener = listener;
@@ -30,39 +30,40 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.CustomViewHold
     @NonNull
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // This is where you inflate the layout (Giving a look to our rows)
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_sent,parent,false);
+        View view = inflater.inflate(R.layout.item_sent, parent, false);
         return new CustomViewHolder(view, listener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder holder,  int position) {
-        // assigning values to the views we created in the recycler_view_row layout file
-        // based on the position of the recycler view
-        holder.textName.setText(list.get(position).getReceiver());
-        holder.textHeadmail.setText(list.get(position).getSubject());
-        holder.textContent.setText(list.get(position).getContent());
-//        holder.imageView.setImageResource(list.get(position).getImage());
-//        holder.textDate.setText(list.get(position).getDate());
+    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
+        // Gán giá trị cho các view trong item layout dựa trên vị trí
+        Email_Sent email = list.get(position);
+        holder.textName.setText(email.getReceiver());
+        holder.textHeadmail.setText(email.getSubject());
+        holder.textContent.setText(email.getContent());
+        // Nếu có các thuộc tính khác cần hiển thị, hãy thêm vào đây
     }
 
     @Override
     public int getItemCount() {
         return list.size();
     }
-    public void filterList(List<Email_Sender> filteredList){
+
+    public void filterList(List<Email_Sent> filteredList) {
         list = filteredList;
         notifyDataSetChanged();
+    }
 
+    public boolean isEmpty() {
+        return list == null || list.isEmpty();
     }
 
     public static class CustomViewHolder extends RecyclerView.ViewHolder {
-        // grabbing the view from our recycler_view_row layout file
-        // kinda like in the onCreate method
         public TextView textName, textHeadmail, textContent, textDate;
         public ImageView imageView;
         public CardView cardView;
+
         public CustomViewHolder(@NonNull View itemView, SelectListener listener) {
             super(itemView);
             textName = itemView.findViewById(R.id.nameSent);
@@ -70,22 +71,16 @@ public class SentAdapter extends RecyclerView.Adapter<SentAdapter.CustomViewHold
             textContent = itemView.findViewById(R.id.contentSent);
             imageView = itemView.findViewById(R.id.imageviewSent);
             cardView = itemView.findViewById(R.id.main_containerSent);
-            textDate= itemView.findViewById(R.id.dateSent);
+            textDate = itemView.findViewById(R.id.dateSent);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener != null) {
-                        int pos = getAdapterPosition();
-
-                        if (pos != RecyclerView.NO_POSITION) {
-                            listener.onItemClicked(pos);
-                        }
+            itemView.setOnClickListener(view -> {
+                if (listener != null) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        listener.onItemClicked(pos);
                     }
                 }
             });
         }
-
     }
-
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.database.Cursor;
 import vn.edu.usth.outlook.Email_Sender;
+import vn.edu.usth.outlook.Email_Sent;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -175,8 +176,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return hasUsers;
     }
-    public List<Email_Sender> getSentEmails(String senderEmail) {
-        List<Email_Sender> emailList = new ArrayList<>();
+    public List<Email_Sent> getSentEmails(String senderEmail) {
+        List<Email_Sent> emailList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Query to fetch sent emails where the sender matches the current user
@@ -195,7 +196,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int isRead = cursor.getInt(cursor.getColumnIndexOrThrow(COL_IS_READ));
 
                 // Create an Email_Sender object and add to list
-                Email_Sender email = new Email_Sender(sender, receiver, subject, content);
+                Email_Sent email = new Email_Sent(sender, receiver, subject, content);
                 emailList.add(email);
             } while (cursor.moveToNext());
         }

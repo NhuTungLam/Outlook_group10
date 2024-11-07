@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
-import vn.edu.usth.outlook.Email_Sender;
+import vn.edu.usth.outlook.Email_Sent;
 import vn.edu.usth.outlook.R;
 import vn.edu.usth.outlook.activities.DetailMail;
 import vn.edu.usth.outlook.database.DatabaseHelper;
@@ -26,53 +26,53 @@ public class SentFragment extends Fragment implements SelectListener {
 
     private RecyclerView recyclerView;
     private SentAdapter sentAdapter;
-    private Email_Sender deletedMail = null;
+    private Email_Sent deletedMail = null;
     private List<String> archivedMail = new ArrayList<>();
-    private List<Email_Sender> emailList;
+    private List<Email_Sent> emailList;
     private DatabaseHelper dbHelper;
-
+    private View placeholderLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sent, container, false);
 
+        // Khởi tạo RecyclerView và placeholder
         recyclerView = view.findViewById(R.id.recycler_sent);
+        placeholderLayout = view.findViewById(R.id.placeholder_layout);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
         dbHelper = new DatabaseHelper(getContext());
 
-        // Láº¥y email ngÆ°á»i dÃ¹ng hiá»‡n táº¡i tá»« SharedPreferences
+        // Lấy email người dùng hiện tại từ SharedPreferences
         SharedPreferences preferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        String senderEmail = preferences.getString("loggedInEmail", null);
+        String sentEmail = preferences.getString("loggedInEmail", null);
 
-        if (senderEmail != null) {
-            emailList = dbHelper.getSentEmails(senderEmail); // Láº¥y danh sÃ¡ch email tá»« DB cho ngÆ°á»i dÃ¹ng hiá»‡n táº¡i
+        if (sentEmail != null) {
+            emailList = dbHelper.getSentEmails(sentEmail); // Lấy danh sách email từ DB cho người dùng hiện tại
         } else {
-            emailList = new ArrayList<>(); // Khá»Ÿi táº¡o danh sÃ¡ch trá»‘ng náº¿u khÃ´ng tÃ¬m tháº¥y email
+            emailList = new ArrayList<>(); // Khởi tạo danh sách trống nếu không tìm thấy email
         }
 
         sentAdapter = new SentAdapter(getContext(), emailList, this);
         recyclerView.setAdapter(sentAdapter);
 
+        // Hiển thị placeholder nếu danh sách rỗng
+        togglePlaceholder();
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        // Check if there are messages to display
-        if (sentAdapter.isEmpty()) {
-            // No messages, show placeholder
+        return view;
+    }
+
+    private void togglePlaceholder() {
+        if (emailList.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             placeholderLayout.setVisibility(View.VISIBLE);
         } else {
-            // Messages are available, display them
-            messageAdapter = new MessageAdapter(sentMessages);
-            recyclerView.setAdapter(messageAdapter);
-
-            // Show RecyclerView, hide placeholder
             recyclerView.setVisibility(View.VISIBLE);
             placeholderLayout.setVisibility(View.GONE);
         }
-
-        return view;
     }
 
     private final ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -114,7 +114,7 @@ public class SentFragment extends Fragment implements SelectListener {
     }
 
     private void handleArchive(int position) {
-        final Email_Sender email = emailList.get(position);
+        final Email_Sent email = emailList.get(position);
         archivedMail.add(String.valueOf(email));
         emailList.remove(position);
         sentAdapter.notifyItemRemoved(position);
@@ -124,7 +124,7 @@ public class SentFragment extends Fragment implements SelectListener {
                 .show();
     }
 
-    private void undoArchive(Email_Sender email, int position) {
+    private void undoArchive(Email_Sent email, int position) {
         archivedMail.remove(archivedMail.lastIndexOf(email));
         emailList.add(position, email);
         sentAdapter.notifyItemInserted(position);
@@ -133,7 +133,7 @@ public class SentFragment extends Fragment implements SelectListener {
     @Override
     public void onItemClicked(int position) {
         Intent intent = new Intent(getContext(), DetailMail.class);
-        Email_Sender email = emailList.get(position);
+        Email_Sent email = emailList.get(position);
         intent.putExtra("Name", email.getReceiver());
         intent.putExtra("Head Mail", email.getSubject());
         intent.putExtra("Me", email.getSender());
