@@ -64,13 +64,6 @@ public class DetailMailSentActivity extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.back_icon);
         backButton.setOnClickListener(v -> finish());
 
-        // Nút xóa email (có thể thêm chức năng)
-        ImageButton deleteButton = findViewById(R.id.delete_button);
-        deleteButton.setOnClickListener(v -> {
-            dbHelper.markEmailAsDeleted(emailId); // Đánh dấu email là đã xóa
-            Toast.makeText(this, "Email marked as deleted", Toast.LENGTH_SHORT).show();
-            finish();
-        });
     }
 
     @Override

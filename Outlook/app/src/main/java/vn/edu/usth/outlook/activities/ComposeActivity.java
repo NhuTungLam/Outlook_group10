@@ -57,6 +57,7 @@ public class ComposeActivity extends AppCompatActivity implements PopupMenu.OnMe
         emailSenderTextView.setText(currentUserEmail);
 
         ImageButton btnSend = findViewById(R.id.btnSend);
+        ImageButton btnBack = findViewById(R.id.btnBack);
 
         // Send button click listener
         btnSend.setOnClickListener(v -> {
@@ -88,12 +89,24 @@ public class ComposeActivity extends AppCompatActivity implements PopupMenu.OnMe
                 Toast.makeText(this, "Error sending email", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // Back button click listener
+        btnBack.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         // Handle popup menu item clicks here
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish(); // Ensure the activity is closed
+        super.onBackPressed(); // Call the parent method
     }
 
     @Override
