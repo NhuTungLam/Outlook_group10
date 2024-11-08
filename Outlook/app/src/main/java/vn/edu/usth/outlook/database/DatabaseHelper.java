@@ -125,7 +125,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return hasUsers;
     }
+    public String getUserEmail(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT EMAIL FROM user WHERE USERNAME = ?", new String[]{username});
 
+        if (cursor.moveToFirst()) {
+            String email = cursor.getString(0);
+            cursor.close();
+            db.close();
+            return email;
+        } else {
+            cursor.close();
+            db.close();
+            return null;
+        }
+    }
     // Send an email
     public boolean sendEmail(String sender, String receiver, String subject, String content) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -139,30 +153,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    // Get list of sent emails for a specific sender
     public List<Email_Sent> getSentEmails(String senderEmail) {
         List<Email_Sent> emailList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT * FROM " + TABLE_EMAIL + " WHERE " + COL_SENDER + " = ? ORDER BY " + COL_TIMESTAMP + " DESC";
+        // Query để lấy các email đã gửi bởi người dùng hiện tại
+        String query = "SELECT * FROM emails WHERE sender = ? ORDER BY timestamp DESC";
         Cursor cursor = db.rawQuery(query, new String[]{senderEmail});
 
+        // Duyệt qua các kết quả trả về
         if (cursor.moveToFirst()) {
             do {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COL_SENT_EMAIL_ID));
-                String sender = cursor.getString(cursor.getColumnIndexOrThrow(COL_SENDER));
-                String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
-                String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
-                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_CONTENT));
-                String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(COL_TIMESTAMP));
-                
-                Email_Sent email = new Email_Sent(id, sender, receiver, subject, content, timestamp);
+                // Kiểm tra cột trước khi truy xuất giá trị
+                int senderIndex = cursor.getColumnIndex(COL_SENDER);
+                int receiverIndex = cursor.getColumnIndex(COL_RECEIVER);
+                int subjectIndex = cursor.getColumnIndex(COL_SUBJECT);
+                int contentIndex = cursor.getColumnIndex(COL_CONTENT);
+                int timestampIndex = cursor.getColumnIndex(COL_TIMESTAMP);
+
+                String sender = senderIndex != -1 ? cursor.getString(senderIndex) : null;
+                String receiver = receiverIndex != -1 ? cursor.getString(receiverIndex) : null;
+                String subject = subjectIndex != -1 ? cursor.getString(subjectIndex) : null;
+                String content = contentIndex != -1 ? cursor.getString(contentIndex) : null;
+                String timestamp = timestampIndex != -1 ? cursor.getString(timestampIndex) : null;
+
+                // Tạo đối tượng Email_Sent và thêm vào danh sách
+                Email_Sent email = new Email_Sent(sender, receiver, subject, content);
                 emailList.add(email);
             } while (cursor.moveToNext());
         }
+
         cursor.close();
         db.close();
 
         return emailList;
     }
+
+
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import androidx.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -44,21 +45,24 @@ public class SentFragment extends Fragment implements SelectListener {
         dbHelper = new DatabaseHelper(getContext());
 
         // Lấy email người dùng hiện tại từ SharedPreferences
-        SharedPreferences preferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        String sentEmail = preferences.getString("loggedInEmail", null);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String loggedInEmail = preferences.getString("loggedInEmail", null);
 
-        if (sentEmail != null) {
-            emailList = dbHelper.getSentEmails(sentEmail); // Lấy danh sách email từ DB cho người dùng hiện tại
+        if (loggedInEmail != null) {
+            // Lấy danh sách email đã gửi từ DB cho người dùng hiện tại
+            emailList = dbHelper.getSentEmails(loggedInEmail);
         } else {
             emailList = new ArrayList<>(); // Khởi tạo danh sách trống nếu không tìm thấy email
         }
 
+        // Thiết lập Adapter và RecyclerView
         sentAdapter = new SentAdapter(getContext(), emailList, this);
         recyclerView.setAdapter(sentAdapter);
 
         // Hiển thị placeholder nếu danh sách rỗng
         togglePlaceholder();
 
+        // Thiết lập thao tác vuốt cho RecyclerView
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 

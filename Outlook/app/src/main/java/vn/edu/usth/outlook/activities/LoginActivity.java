@@ -102,20 +102,21 @@ public class LoginActivity extends AppCompatActivity {
 
         // If both the username and password are valid, proceed to check the login information.
         if (databaseHelper.checkUserCredentials(username, password)) {
-             /* Lấy đối tượng SharedPreferences đặt giá trị mặc định (truy cập file SharedPreferences),
-             dùng editor mới không phải giá trị mặc dịnh*/
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
+
             editor.putBoolean("isLoggedIn", true);
+            // Lấy email của người dùng từ database và lưu vào SharedPreferences
+            String email = databaseHelper.getUserEmail(username);
+            editor.putString("loggedInEmail", email);
             editor.apply();
-            // If the information matches, allow login and go to MainActivity
+
+            // Chuyển hướng đến MainActivity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-        } else if (!databaseHelper.checkUserCredentials(username, password)) {
-            Toast.makeText(this, "Wrong username or password. Please check again.", Toast.LENGTH_SHORT).show();
-        } else if (!databaseHelper.hasUsers()) {
-            Toast.makeText(this, "No account yet. Please register.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Invalid username or password. Please try again.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -127,5 +128,4 @@ public class LoginActivity extends AppCompatActivity {
         notInputPassword.setText("");
         notInputPassword.setVisibility(View.GONE);
     }
-
 }

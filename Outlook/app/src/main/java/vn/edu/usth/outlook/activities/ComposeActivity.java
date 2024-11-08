@@ -2,11 +2,10 @@ package vn.edu.usth.outlook.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Window;
@@ -21,9 +20,9 @@ import vn.edu.usth.outlook.database.DatabaseHelper;
 
 public class ComposeActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-    private SQLiteDatabase db;
     private EditText receiverEditText, subjectEditText, contentEditText;
     private String currentUserEmail;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +33,17 @@ public class ComposeActivity extends AppCompatActivity implements PopupMenu.OnMe
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.background_all));
         setContentView(R.layout.activity_compose);
 
-        // Initialize the database
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        db = dbHelper.getWritableDatabase();
+        // Initialize the database helper
+        dbHelper = new DatabaseHelper(this);
 
         // Retrieve the logged-in user's email from SharedPreferences
-        SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        currentUserEmail = preferences.getString("loggedInEmail", null); // Default to null if not found
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        currentUserEmail = preferences.getString("loggedInEmail", null); // Lấy email đã đăng nhập
 
-        // Check if the email is retrieved successfully
+        // Kiểm tra và xử lý nếu không tìm thấy email
         if (currentUserEmail == null) {
             Toast.makeText(this, "Error: User not logged in.", Toast.LENGTH_SHORT).show();
-            finish(); // End the activity if email is not available
+            finish(); // Đóng Activity nếu không có email
             return;
         }
 
@@ -54,16 +52,15 @@ public class ComposeActivity extends AppCompatActivity implements PopupMenu.OnMe
         subjectEditText = findViewById(R.id.subjectEditText);
         contentEditText = findViewById(R.id.contentEditText);
 
-        // Initialize email sender TextView
-        TextView emailSenderTextView = findViewById(R.id.emailSender);  // Initialize your TextView
-        emailSenderTextView.setText(currentUserEmail);  // Set the current user's email to the TextView
+        // Set the current user's email to the TextView
+        TextView emailSenderTextView = findViewById(R.id.emailSender);
+        emailSenderTextView.setText(currentUserEmail);
 
         ImageButton btnSend = findViewById(R.id.btnSend);
-        ImageButton backBtn = findViewById(R.id.backBtn);
 
         // Send button click listener
         btnSend.setOnClickListener(v -> {
-            String sender = currentUserEmail;  // Retrieve the current logged-in email
+            String sender = currentUserEmail;
             String receiver = receiverEditText.getText().toString().trim();
             String subject = subjectEditText.getText().toString().trim();
             String content = contentEditText.getText().toString().trim();
@@ -81,7 +78,7 @@ public class ComposeActivity extends AppCompatActivity implements PopupMenu.OnMe
 
                     // Navigate back to the main activity
                     Intent intent = new Intent(this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Clears all other activities
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
 
                 } else {
@@ -102,8 +99,8 @@ public class ComposeActivity extends AppCompatActivity implements PopupMenu.OnMe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (db != null && db.isOpen()) {
-            db.close();  // Close database when activity is destroyed
+        if (dbHelper != null) {
+            dbHelper.close();  // Close database when activity is destroyed
         }
     }
 }
