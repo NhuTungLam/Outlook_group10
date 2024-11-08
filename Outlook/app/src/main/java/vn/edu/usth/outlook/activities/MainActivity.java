@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -94,6 +95,21 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
             return; // Dừng thực hiện các lệnh sau
         }
 
+        String email = preferences.getString("loggedInEmail", "No email available");
+        String username = preferences.getString("loggedInEmail", "No username available");
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        View headerView = navigationView.getHeaderView(0);
+        // Hiển thị email trong giao diện (ví dụ với TextView)
+        TextView emailTextView = headerView.findViewById(R.id.nav_header_email);
+        TextView usernameTextView = headerView.findViewById(R.id.nav_header_username);
+
+        if (emailTextView != null && usernameTextView != null) {
+            emailTextView.setText(email);
+            usernameTextView.setText(username);
+        }
+
         //Change status bar background to the corresponding
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.background_all));
@@ -117,8 +133,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ggicon);
         // Lấy NavigationView và header view
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        View headerView = navigationView.getHeaderView(0);
+
 
         // Lấy nút đóng từ header view
         ImageButton closeBtn = headerView.findViewById(R.id.btn_close_nav);
