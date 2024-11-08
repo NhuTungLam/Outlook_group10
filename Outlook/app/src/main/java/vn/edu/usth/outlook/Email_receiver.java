@@ -2,22 +2,19 @@ package vn.edu.usth.outlook;
 
 import android.widget.ImageView;
 
-public class Email_Sender {
+public class Email_receiver {
     String sender;
     String subject;
     String content;
     String receiver;
 
-    // Default constructor
-    public Email_Sender() {
-        // Default constructor required for Firebase
-    }
+
 
 
     ImageView profile;
 
 
-    public Email_Sender(String sender, String subject, String content,String receiver) {
+    public Email_receiver(String sender,String receiver ,String subject, String content) {
         this.sender = sender;
         this.subject = subject;
         this.content = content;

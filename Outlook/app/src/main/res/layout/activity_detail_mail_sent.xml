@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/detail_mail_layout"
+    android:background="@color/background_all">
+
+    <!-- Header Layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:id="@+id/header"
+        android:background="@color/blue_theme">
+
+        <ImageButton
+            android:id="@+id/back_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/row_back"
+            android:layout_marginStart="12dp"
+            android:contentDescription="@string/back" />
+
+        <ImageButton
+            android:id="@+id/more"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/more_vert"
+            android:background="@drawable/nav_item_background"
+            android:contentDescription="@string/More"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:onClick="morePopup" />
+
+        <ImageButton
+            android:id="@+id/archive_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/more"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/archive"
+            android:contentDescription="archive" />
+
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/archive_button"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/nav_item_background"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="delete" />
+    </RelativeLayout>
+
+    <!-- Email Subject -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/pressed_in_whitebg">
+        <TextView
+            android:id="@+id/D_head_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="22sp"
+            android:text="Subject Here"
+            android:paddingStart="16dp"
+            android:textColor="@color/black"/>
+    </RelativeLayout>
+
+    <!-- Sender Info -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/D_imageview"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/account_circle"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/D_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/D_imageview"
+            android:layout_marginStart="12dp"
+            android:layout_alignTop="@id/D_imageview"
+            android:text="Sender Name"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/D_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/D_name"
+            android:text="9:00 AM"
+            android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/to_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/D_name"
+            android:layout_toEndOf="@id/D_imageview"
+            android:layout_marginStart="12dp"
+            android:text="To: "
+            android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/toW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/to_label"
+            android:layout_alignBaseline="@id/to_label"
+            android:text="receiver@example.com"
+            android:textColor="@color/black" />
+
+        <ImageButton
+            android:id="@+id/more_vert"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/more_vert"
+            android:contentDescription="more_options"
+            android:onClick="morevertPopup" />
+    </RelativeLayout>
+
+    <!-- Email Content Scrollable -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/D_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email content goes here..."
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:scrollbars="vertical" />
+    </ScrollView>
+
+    <!-- Reply Button at the Bottom -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reply_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/nav_item_background"
+            android:drawableStart="@drawable/turn_left"
+            android:text="reply"
+            android:textAlignment="textStart"
+            android:drawablePadding="15dp"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

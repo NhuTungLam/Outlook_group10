@@ -24,7 +24,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -32,12 +31,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
-import vn.edu.usth.outlook.Email_Sender;
+
+import vn.edu.usth.outlook.Email_receiver;
 import vn.edu.usth.outlook.KeyboardVisibilityUtils;
 import vn.edu.usth.outlook.R;
+import vn.edu.usth.outlook.adapter.ReceiveAdapter;
 import vn.edu.usth.outlook.fragment.AppContactFragment;
 import vn.edu.usth.outlook.fragment.ArchiveFragment;
 import vn.edu.usth.outlook.fragment.CalendarFragment;
@@ -50,15 +51,14 @@ import vn.edu.usth.outlook.fragment.SentFragment;
 import vn.edu.usth.outlook.fragment.SettingsFragment;
 import vn.edu.usth.outlook.fragment.UnwantedFragment;
 import vn.edu.usth.outlook.listener.SelectListener;
-import vn.edu.usth.outlook.adapter.CustomAdapter;
 import vn.edu.usth.outlook.fragment.InboxFragment;
 
 public class MainActivity extends AppCompatActivity implements SelectListener, KeyboardVisibilityUtils.OnKeyboardVisibilityListener {
 
     RecyclerView recyclerView;
     //    List<Email> List;
-    public static List<Email_Sender> emailList = new ArrayList<>();
-    CustomAdapter customAdapter;
+    public static List<Email_receiver> emailList = new ArrayList<>();
+    ReceiveAdapter customAdapter;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -357,8 +357,8 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
 
     //  Search bar
     private void filter(String newText) {
-        List<Email_Sender> filteredList = new ArrayList<>();
-        for (Email_Sender item : emailList) {
+        List<Email_receiver> filteredList = new ArrayList<>();
+        for (Email_receiver item : emailList) {
             if (item.getSender().toLowerCase().startsWith(newText.toLowerCase())) {
                 filteredList.add(item);
             }
@@ -381,97 +381,17 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
 
 
     }
+    @Override
+    public void onLongItemClick(int position) {
+
+    }
     // Display items in RecyclerView
     private void displayItems() {
         recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));  // Single column grid (like list)
-
-        // Initialize email list
-        emailList = new ArrayList<>();
-        emailList.add(new Email_Sender("user1@example.com", "Do sth", "Subject 1", "me"));
-        emailList.add(new Email_Sender("user2@example.com", "Make sth", "Subject 2", "Long"));
-        emailList.add(new Email_Sender("user3@example.com", "Play sth", "Subject 3", "me"));
-
-
-
-    // Create adapter and set it to the RecyclerView
-    customAdapter = new CustomAdapter(this, emailList,this);
-    recyclerView.setAdapter(customAdapter);
-
-    //Add swipe-to-delete or other functionalities with ItemTouchHelper
-    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-    itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
-    //Swipe to do delete and archive
-    Email_Sender deletedMail = null;
-    List<String> archivedMail = new ArrayList<>();
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            int position = viewHolder.getAdapterPosition();
-            switch (direction) {
-                case ItemTouchHelper.LEFT:
-                    // Handle left swipe (delete)
-                    deletedMail = emailList.get(position); // Get the deleted email
-                    emailList.remove(position); // Remove it from the list
-                    customAdapter.notifyItemRemoved(position); // Notify the adapter
-
-                    // Show a Snackbar with an undo option
-                    Snackbar.make(recyclerView, "Email deleted", Snackbar.LENGTH_LONG)
-                            .setAction("Undo", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    // User clicked "Undo," so add the deleted email back to the list
-                                    if (deletedMail != null) {
-                                        emailList.add(position, deletedMail);
-                                        customAdapter.notifyItemInserted(position);
-                                    }
-                                }
-                            }).show();
-                    break;
-                case ItemTouchHelper.RIGHT:
-                    final Email_Sender email = emailList.get(position);
-
-                    archivedMail.add(String.valueOf(email));
-                    emailList.remove(position);
-                    customAdapter.notifyItemRemoved(position);
-
-                    Snackbar.make(recyclerView,"Conversation Archived.", Snackbar.LENGTH_LONG)
-                            .setAction("Undo", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    archivedMail.remove(email);
-                                    emailList.add(position, email);
-                                    customAdapter.notifyItemInserted(position);
-                                }
-                            }).show();
-                    break;
-            }
-
-        }
-    };
-
-    @Override
-    public void onItemClicked(int position) {
-        Intent intent = new Intent(MainActivity.this, DetailMail.class);
-        intent.putExtra("Name", emailList.get(position).getSender());
-        intent.putExtra("Head Mail", emailList.get(position).getSubject());
-        intent.putExtra("Me", emailList.get(position).getReceiver());
-        intent.putExtra("Content", emailList.get(position).getContent());
-        intent.putExtra("position", position);
-        startActivity(intent);
     }
 
-    @Override
-    public void onLongItemClick(int position) {
-
-    }
     private void openFragment(Fragment fragment,String title) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);

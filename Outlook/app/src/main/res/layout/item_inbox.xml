@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/main_container"
+    android:id="@+id/main_containerReceive"
     android:orientation="vertical"
     android:background="@color/background_all">
 
@@ -14,7 +14,7 @@
         >
 
         <ImageView
-            android:id="@+id/imageview"
+            android:id="@+id/imageviewReceive"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="0dp"
@@ -22,7 +22,7 @@
             android:src="@drawable/account_circle" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/nameReceive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="-5dp"
@@ -36,7 +36,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/dateReceive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -48,8 +48,8 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/head_email"
-            android:layout_below="@id/name"
+            android:id="@+id/head_emailReceive"
+            android:layout_below="@id/nameReceive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="robotolight"
@@ -61,18 +61,18 @@
             android:text="@string/Head_Mail"/>
 
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/contentReceive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/head_email"
-            android:layout_marginLeft="-5dp"
-            android:layout_toRightOf="@+id/imageview"
-            android:ellipsize="end"
             android:fontFamily="robotolight"
-            android:maxLines="1"
+            android:layout_below="@+id/head_emailReceive"
+            android:layout_toRightOf="@+id/imageview"
+            android:layout_marginLeft="-5dp"
             android:text="@string/Content"
-            android:textColor="@color/black"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/black" />
 
     </RelativeLayout>
 

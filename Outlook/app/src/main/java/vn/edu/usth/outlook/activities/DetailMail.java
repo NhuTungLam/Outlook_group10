@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -19,7 +20,6 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.edu.usth.outlook.Email_Sender;
 import vn.edu.usth.outlook.R;
 import vn.edu.usth.outlook.database.DatabaseHelper;
 import vn.edu.usth.outlook.listener.OnSwipeTouchListener;
@@ -66,8 +66,14 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
 
         // Back button to main page
         ImageButton backIcon = findViewById(R.id.back_icon);
+        Button replyIcon = findViewById(R.id.reply_button);
         backIcon.setOnClickListener(v -> {
             Intent intent = new Intent(DetailMail.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+        replyIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(DetailMail.this, ComposeActivity.class);
             startActivity(intent);
             finish();
         });
