@@ -27,9 +27,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         this.listener = listener;
     }
 
-    public CustomAdapter(List<Email_Sender> emailList, SelectListener listener) {
-        this.listener = listener;
-    }
 
     @NonNull
     @Override
@@ -44,6 +41,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public void onBindViewHolder(@NonNull CustomViewHolder holder,  int position) {
         // assigning values to the views we created in the recycler_view_row layout file
         // based on the position of the recycler view
+        Email_Sender email_sender = list.get(position);
         holder.textName.setText(list.get(position).getSender());
         holder.textHeadmail.setText(list.get(position).getSubject());
         holder.textContent.setText(list.get(position).getContent());

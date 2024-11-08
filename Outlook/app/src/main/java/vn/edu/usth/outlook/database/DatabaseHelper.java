@@ -11,6 +11,7 @@ import java.util.List;
 import android.database.Cursor;
 import vn.edu.usth.outlook.Email_Sender;
 import vn.edu.usth.outlook.Email_Sent;
+import vn.edu.usth.outlook.Email_receiver;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -197,6 +198,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 // Create an Email_Sender object and add to list
                 Email_Sent email = new Email_Sent(sender, receiver, subject, content);
+                emailList.add(email);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return emailList;
+    }
+    public List<Email_receiver> getReceiveEmails(String receiverEmail) {
+        List<Email_receiver> emailList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Query to fetch sent emails where the sender matches the current user
+        String query = "SELECT * FROM " + TABLE_EMAIL + " WHERE " + COL_SENDER + " = ? ORDER BY " + COL_TIMESTAMP + " DESC";
+        Cursor cursor = db.rawQuery(query, new String[]{receiverEmail});
+
+        // Populate the emailList with email data
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COL_SENT_EMAIL_ID));
+                String sender = cursor.getString(cursor.getColumnIndexOrThrow(COL_SENDER));
+                String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
+                String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
+                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_Content));
+                String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(COL_TIMESTAMP));
+                int isRead = cursor.getInt(cursor.getColumnIndexOrThrow(COL_IS_READ));
+
+                // Create an Email_Sender object and add to list
+                Email_receiver email = new Email_receiver(receiver, sender, subject, content);
                 emailList.add(email);
             } while (cursor.moveToNext());
         }

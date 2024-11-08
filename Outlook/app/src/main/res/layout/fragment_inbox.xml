@@ -5,4 +5,15 @@
     android:layout_height="match_parent"
     android:id="@+id/inbox"
     tools:context=".fragment.InboxFragment">
+    <RelativeLayout
+        android:id="@+id/inbox_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_inbox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:visibility="gone"/>
 </FrameLayout>

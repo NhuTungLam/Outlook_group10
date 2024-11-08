@@ -358,9 +358,9 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
 
         // Initialize email list
         emailList = new ArrayList<>();
-        emailList.add(new Email_Sender("user1@example.com", "Do sth", "Subject 1", "me"));
-        emailList.add(new Email_Sender("user2@example.com", "Make sth", "Subject 2", "Long"));
-        emailList.add(new Email_Sender("user3@example.com", "Play sth", "Subject 3", "me"));
+//        emailList.add(new Email_Sender("user1@example.com", "Do sth", "Subject 1", "me"));
+//        emailList.add(new Email_Sender("user2@example.com", "Make sth", "Subject 2", "Long"));
+//        emailList.add(new Email_Sender("user3@example.com", "Play sth", "Subject 3", "me"));
 
 
 
