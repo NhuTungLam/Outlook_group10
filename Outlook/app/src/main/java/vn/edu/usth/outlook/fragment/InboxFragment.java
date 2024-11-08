@@ -142,10 +142,10 @@ public class InboxFragment extends Fragment implements SelectListener {
     public void onItemClicked(int position) {
         Intent intent = new Intent(getContext(), DetailMail.class);
         Email_receiver email = emailReceiveList.get(position);
-        intent.putExtra("Name", email.getSender());
-        intent.putExtra("Head Mail", email.getSubject());
+        intent.putExtra("sender", email.getSender());
+        intent.putExtra("subject", email.getSubject());
         intent.putExtra("Me", email.getSender());
-        intent.putExtra("Content", email.getContent());
+        intent.putExtra("content", email.getContent());
         intent.putExtra("position", position);
         startActivity(intent);
     }

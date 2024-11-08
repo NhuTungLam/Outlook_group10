@@ -1,39 +1,32 @@
 package vn.edu.usth.outlook.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import vn.edu.usth.outlook.Email_receiver;
 import vn.edu.usth.outlook.R;
 import vn.edu.usth.outlook.database.DatabaseHelper;
-import vn.edu.usth.outlook.listener.OnSwipeTouchListener;
 
-public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class DetailMail extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
-    private List<Email_Sender> emailSenderList = new ArrayList<>();
-    private String currentUserEmail = "receiver@example.com";  // Replace with logged-in user's email
+    private int emailId;
+    private String senderEmail;
+    private String receiverEmail;
+    private String emailSubject;
+    private String emailContent;
+    private String emailTimestamp;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         // Change status bar background
         Window window = getWindow();
@@ -42,104 +35,48 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
 
         dbHelper = new DatabaseHelper(this); // Initialize the database helper
 
-        // Load emails for the current user
-        emailSenderList = loadEmailData(currentUserEmail);
 
-        int position = getIntent().getIntExtra("position", 0);
-        final int[] currentIndex = {position};
+        // Nhận thông tin email từ intent khi mở từ SentFragment
+        Intent intent = getIntent();
+        if (intent != null) {
 
-        // Retrieve and display email data based on position
-        TextView Dname = findViewById(R.id.D_name);
-        TextView DheadMail = findViewById(R.id.D_head_email);
-        TextView Dcontent = findViewById(R.id.D_content);
-        TextView Dreceiver = findViewById(R.id.toW);
-
-        // Set the data if emails are available
-        if (!emailSenderList.isEmpty()) {
-            Dname.setText(emailSenderList.get(currentIndex[0]).getSender());
-            DheadMail.setText(emailSenderList.get(currentIndex[0]).getSubject());
-            Dcontent.setText(emailSenderList.get(currentIndex[0]).getContent());
-            Dreceiver.setText(emailSenderList.get(currentIndex[0]).getReceiver());
-        } else {
-            Toast.makeText(this, "No emails found", Toast.LENGTH_SHORT).show();
+            emailId = intent.getIntExtra("email_id", 1); // Lấy ID của email để dễ quản lý
+            senderEmail = intent.getStringExtra("sender");
+            receiverEmail = intent.getStringExtra("receiver");
+            emailSubject = intent.getStringExtra("subject");
+            emailContent = intent.getStringExtra("content");
+            emailTimestamp = intent.getStringExtra("timestamp");
         }
 
-        // Back button to main page
-        ImageButton backIcon = findViewById(R.id.back_icon);
+        if (emailId == -1) {
+            Toast.makeText(this, "Email ID missing", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+
+        // Ánh xạ các `TextView` trong giao diện XML
+        TextView senderGmailTextView = findViewById(R.id.SenderGmailHere);
+        TextView subjectTextView = findViewById(R.id.Send_head_email_here);
+        TextView contentTextView = findViewById(R.id.Send_content_here);
+        TextView timestampTextView = findViewById(R.id.D_time);
+
+        // Cập nhật giao diện với dữ liệu email
+        senderGmailTextView.setText(senderEmail);
+        subjectTextView.setText(emailSubject);
+        contentTextView.setText(emailContent);
+        timestampTextView.setText(emailTimestamp);
+        ImageButton backButton = findViewById(R.id.back_icon);
+        backButton.setOnClickListener(v -> finish());
+
         Button replyIcon = findViewById(R.id.reply_button);
-        backIcon.setOnClickListener(v -> {
-            Intent intent = new Intent(DetailMail.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        });
         replyIcon.setOnClickListener(v -> {
-            Intent intent = new Intent(DetailMail.this, ComposeActivity.class);
-            startActivity(intent);
+            Intent intentsent = new Intent(DetailMail.this, ComposeActivity.class);
+            startActivity(intentsent);
             finish();
         });
-
-        // Additional buttons and swipe actions (unchanged)
-        ImageButton popupButton2 = findViewById(R.id.more);
-        popupButton2.setOnClickListener(this::morePopup);
-        ImageButton popupButton3 = findViewById(R.id.more_vert);
-        popupButton3.setOnClickListener(this::morevertPopup);
-
-        // Handle swipe gestures to navigate emails
-        LinearLayout swappable = findViewById(R.id.detailmail);
-        swappable.setOnTouchListener(new OnSwipeTouchListener(DetailMail.this) {
-            public void onSwipeRight() {
-                if (currentIndex[0] > 0) {
-                    currentIndex[0]--;
-                    updateEmailDisplay(currentIndex[0]);
-                }
-            }
-            public void onSwipeLeft() {
-                if (currentIndex[0] < emailSenderList.size() - 1) {
-                    currentIndex[0]++;
-                    updateEmailDisplay(currentIndex[0]);
-                }
-            }
-        });
     }
 
-    // Load email data from the database for the specified receiver
-    private List<Email_Sender> loadEmailData(String receiver) {
-        List<Email_Sender> emails = new ArrayList<>();
-        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM emails WHERE receiver = ?", new String[]{receiver});
-
-        if (cursor.moveToFirst()) {
-            do {
-                // Safely get the index for each column
-                int senderIndex = cursor.getColumnIndex("sender");
-                int subjectIndex = cursor.getColumnIndex("subject");
-                int contentIndex = cursor.getColumnIndex("content");
-
-                // Ensure the indexes are valid before attempting to retrieve data
-                String sender = senderIndex != -1 ? cursor.getString(senderIndex) : "Unknown Sender";
-                String subject = subjectIndex != -1 ? cursor.getString(subjectIndex) : "No Subject";
-                String content = contentIndex != -1 ? cursor.getString(contentIndex) : "No Content";
-
-                emails.add(new Email_Sender(sender, content, subject, receiver));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return emails;
-    }
-
-
-    // Update the email display with current email data
-    private void updateEmailDisplay(int index) {
-        TextView Dname = findViewById(R.id.D_name);
-        TextView DheadMail = findViewById(R.id.D_head_email);
-        TextView Dcontent = findViewById(R.id.D_content);
-        TextView Dreceiver = findViewById(R.id.toW);
-
-        Email_Sender email = emailSenderList.get(index);
-        Dname.setText(email.getSender());
-        DheadMail.setText(email.getSubject());
-        Dcontent.setText(email.getContent());
-        Dreceiver.setText(email.getReceiver());
-    }
 
     public void morePopup(View view) {
         PopupMenu popup = new PopupMenu(this, view);
@@ -148,15 +85,18 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
         popup.show();
     }
 
-    public void morevertPopup(View view) {
-        PopupMenu popup = new PopupMenu(this, view);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.options_more_vert);
-        popup.show();
+
     }
 
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        return false;
+    protected void onDestroy() {
+        super.onDestroy();
+        dbHelper.close();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbHelper.close();
     }
 }

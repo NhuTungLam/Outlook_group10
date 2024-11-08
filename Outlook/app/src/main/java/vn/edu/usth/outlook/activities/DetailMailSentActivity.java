@@ -3,6 +3,7 @@ package vn.edu.usth.outlook.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class DetailMailSentActivity extends AppCompatActivity {
         // Nhận thông tin email từ intent khi mở từ SentFragment
         Intent intent = getIntent();
         if (intent != null) {
-            emailId = intent.getIntExtra("email_id", -1); // Lấy ID của email để dễ quản lý
+            emailId = intent.getIntExtra("email_id", 1); // Lấy ID của email để dễ quản lý
             senderEmail = intent.getStringExtra("sender");
             receiverEmail = intent.getStringExtra("receiver");
             emailSubject = intent.getStringExtra("subject");
@@ -64,13 +65,22 @@ public class DetailMailSentActivity extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.back_icon);
         backButton.setOnClickListener(v -> finish());
 
-        // Nút xóa email (có thể thêm chức năng)
-        ImageButton deleteButton = findViewById(R.id.delete_button);
-        deleteButton.setOnClickListener(v -> {
-            dbHelper.markEmailAsDeleted(emailId); // Đánh dấu email là đã xóa
-            Toast.makeText(this, "Email marked as deleted", Toast.LENGTH_SHORT).show();
+
+        Button replyIcon = findViewById(R.id.reply_button);
+        replyIcon.setOnClickListener(v -> {
+            Intent intentsent = new Intent(DetailMailSentActivity.this, ComposeActivity.class);
+            startActivity(intentsent);
             finish();
         });
+
+        // Nút xóa email (có thể thêm chức năng)
+//        ImageButton deleteButton = findViewById(R.id.delete_button);
+//        deleteButton.setOnClickListener(v -> {
+//            dbHelper.markEmailAsDeleted(emailId); // Đánh dấu email là đã xóa
+//            Toast.makeText(this, "Email marked as deleted", Toast.LENGTH_SHORT).show();
+//            finish();
+//        });
+
     }
 
     @Override

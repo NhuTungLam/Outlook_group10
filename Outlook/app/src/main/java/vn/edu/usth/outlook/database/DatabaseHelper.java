@@ -57,9 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_SENDER + " TEXT, " +
                 COL_RECEIVER + " TEXT, " +
                 COL_SUBJECT + " TEXT, " +
-                COL_Content + " TEXT, " +
-                COL_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
-                COL_IS_READ + " INTEGER DEFAULT 0" +  // 0 = unread, 1 = read
+                COL_Content + " TEXT " +
                 ")");
     }
 
@@ -158,15 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " ORDER BY " + COL_TIMESTAMP + " DESC", new String[]{receiver});
     }
 
-    // Mark email as read
-    public boolean markEmailAsRead(int emailId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_IS_READ, 1); // 1 indicates read
-        int result = db.update(TABLE_EMAIL, contentValues, COL_SENT_EMAIL_ID + " = ?", new String[]{String.valueOf(emailId)});
-        db.close();
-        return result > 0;
-    }
+
 
     // Check if the user table has any users (for initial setup)
     public boolean hasUsers() {
@@ -192,11 +182,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
                 String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
                 String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_Content));
-                String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(COL_TIMESTAMP));
-                int isRead = cursor.getInt(cursor.getColumnIndexOrThrow(COL_IS_READ));
 
                 // Create an Email_Sender object and add to list
-                Email_Sent email = new Email_Sent(sender, receiver, subject, content);
+                Email_Sent email = new Email_Sent(id ,sender, receiver, subject, content);
                 emailList.add(email);
             } while (cursor.moveToNext());
         }
@@ -221,11 +209,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
                 String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
                 String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_Content));
-                String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(COL_TIMESTAMP));
-                int isRead = cursor.getInt(cursor.getColumnIndexOrThrow(COL_IS_READ));
-
                 // Create an Email_Sender object and add to list
-                Email_receiver email = new Email_receiver(sender, receiver, subject, content);
+                Email_receiver email = new Email_receiver(id,sender, receiver, subject, content);
                 emailreceiveList.add(email);
             } while (cursor.moveToNext());
         }
@@ -234,4 +219,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return emailreceiveList;
     }
+
+
 }
