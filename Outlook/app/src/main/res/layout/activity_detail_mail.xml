@@ -66,11 +66,11 @@
         android:background="@color/pressed_in_whitebg">
 
         <TextView
-            android:id="@+id/D_head_email"
+            android:id="@+id/Send_head_email_here"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="HELLOOO"
+            android:textColor="@color/black"
             android:textSize="22dp" />
     </RelativeLayout>
     <RelativeLayout
@@ -86,12 +86,23 @@
             android:src="@drawable/account_circle" />
 
         <TextView
-            android:id="@+id/D_name"
+            android:id="@+id/From"
             android:layout_width="wrap_content"
             android:layout_height="26dp"
-            android:layout_marginLeft="85dp"
-            android:layout_marginTop="20dp"
-            android:text="Long"
+            android:layout_toEndOf="@id/D_imageview"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:text="From:"
+            android:textColor="@color/black"
+            android:textSize="20dp">
+        </TextView>
+        <TextView
+            android:id="@+id/SenderGmailHere"
+            android:layout_toRightOf="@id/From"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/black"
             android:textSize="20dp" />
 
@@ -103,13 +114,6 @@
                 android:text="9:00"
                 />
 
-            <TextView
-                android:id="@+id/toW"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/D_name"
-                android:layout_marginStart="85dp"
-                android:text="nhutunglama1@gmail.com" />
             <ImageButton
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -125,15 +129,15 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/D_content"
+            android:id="@+id/Send_content_here"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="16dp"
+            android:textColor="@color/black"
             android:fadeScrollbars="false"
             android:padding="8dp"
             android:scrollbars="vertical"
-            android:text="hello"
             android:textSize="16sp" />
 
     </ScrollView>

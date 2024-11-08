@@ -157,6 +157,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
     // Check if the user table has any users (for initial setup)
     public boolean hasUsers() {
         SQLiteDatabase db = this.getReadableDatabase();

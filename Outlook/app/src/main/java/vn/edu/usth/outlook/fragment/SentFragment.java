@@ -97,6 +97,18 @@ public class SentFragment extends Fragment implements SelectListener {
         deletedMail = emailList.get(position);
 
 
+        // Đánh dấu email là đã xóa trong cơ sở dữ liệu
+//        dbHelper.markEmailAsDeleted(deletedMail.getId());
+
+        emailList.remove(position);
+        sentAdapter.notifyItemRemoved(position);
+
+        // Làm mới DeletedFragment
+//        DeletedFragment deletedFragment = (DeletedFragment) getParentFragmentManager().findFragmentByTag("DeletedFragmentTag");
+//        if (deletedFragment != null) {
+//            deletedFragment.refreshDeletedEmails();
+//        }
+
 
         Snackbar.make(recyclerView, "Email deleted", Snackbar.LENGTH_LONG)
                 .setAction("Undo", v -> undoDelete(position))
