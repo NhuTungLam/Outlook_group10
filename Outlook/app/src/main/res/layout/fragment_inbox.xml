@@ -5,4 +5,58 @@
     android:layout_height="match_parent"
     android:id="@+id/inbox"
     tools:context=".fragment.InboxFragment">
+    <RelativeLayout
+        android:id="@+id/inbox_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"> <!-- Ẩn mặc định -->
+
+        <ImageView
+            android:id="@+id/nothinginSent"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/nothing_in_conversation_history"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp" />
+
+        <TextView
+            android:id="@+id/firstLineInSent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nothing_in_archive"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/nothinginSent"
+            android:fontFamily="@font/abadi_mt_bold" />
+
+        <TextView
+            android:id="@+id/secondLineInSent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No one talk to you,\nget some friends."
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_below="@id/firstLineInSent"
+            android:layout_marginTop="10dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.6"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/secondLineInSent"
+            android:text="@string/go_to_inbox"
+            android:textColor="@color/blue_character"
+            android:background="@drawable/nav_item_background" />
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_inbox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:visibility="gone"/>
 </FrameLayout>
