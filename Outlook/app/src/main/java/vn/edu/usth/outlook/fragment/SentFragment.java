@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import vn.edu.usth.outlook.Email_Sent;
 import vn.edu.usth.outlook.R;
-import vn.edu.usth.outlook.activities.DetailMail;
+import vn.edu.usth.outlook.activities.DetailMailSentActivity;
 import vn.edu.usth.outlook.database.DatabaseHelper;
 import vn.edu.usth.outlook.listener.SelectListener;
 import vn.edu.usth.outlook.adapter.SentAdapter;
@@ -32,11 +32,11 @@ public class SentFragment extends Fragment implements SelectListener {
     private List<Email_Sent> emailList;
     private DatabaseHelper dbHelper;
     private View placeholderLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sent, container, false);
 
-        // Khởi tạo RecyclerView và placeholder
         recyclerView = view.findViewById(R.id.recycler_sent);
         placeholderLayout = view.findViewById(R.id.placeholder_layout);
         recyclerView.setHasFixedSize(true);
@@ -44,25 +44,20 @@ public class SentFragment extends Fragment implements SelectListener {
 
         dbHelper = new DatabaseHelper(getContext());
 
-        // Lấy email người dùng hiện tại từ SharedPreferences
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String loggedInEmail = preferences.getString("loggedInEmail", null);
 
         if (loggedInEmail != null) {
-            // Lấy danh sách email đã gửi từ DB cho người dùng hiện tại
             emailList = dbHelper.getSentEmails(loggedInEmail);
         } else {
-            emailList = new ArrayList<>(); // Khởi tạo danh sách trống nếu không tìm thấy email
+            emailList = new ArrayList<>();
         }
 
-        // Thiết lập Adapter và RecyclerView
         sentAdapter = new SentAdapter(getContext(), emailList, this);
         recyclerView.setAdapter(sentAdapter);
 
-        // Hiển thị placeholder nếu danh sách rỗng
         togglePlaceholder();
 
-        // Thiết lập thao tác vuốt cho RecyclerView
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
@@ -98,9 +93,26 @@ public class SentFragment extends Fragment implements SelectListener {
             }
         }
     };
-
     private void handleDelete(int position) {
         deletedMail = emailList.get(position);
+
+        // Đánh dấu email là đã xóa trong cơ sở dữ liệu
+        dbHelper.markEmailAsDeleted(deletedMail.getId());
+
+        emailList.remove(position);
+        sentAdapter.notifyItemRemoved(position);
+
+        // Làm mới DeletedFragment
+        DeletedFragment deletedFragment = (DeletedFragment) getParentFragmentManager().findFragmentByTag("DeletedFragmentTag");
+        if (deletedFragment != null) {
+            deletedFragment.refreshDeletedEmails();
+        }
+
+        Snackbar.make(recyclerView, "Email deleted", Snackbar.LENGTH_LONG)
+                .setAction("Undo", v -> undoDelete(position))
+                .show();
+
+
         emailList.remove(position);
         sentAdapter.notifyItemRemoved(position);
 
@@ -108,7 +120,6 @@ public class SentFragment extends Fragment implements SelectListener {
                 .setAction("Undo", v -> undoDelete(position))
                 .show();
     }
-
     private void undoDelete(int position) {
         if (deletedMail != null) {
             emailList.add(position, deletedMail);
@@ -136,13 +147,15 @@ public class SentFragment extends Fragment implements SelectListener {
 
     @Override
     public void onItemClicked(int position) {
-        Intent intent = new Intent(getContext(), DetailMail.class);
         Email_Sent email = emailList.get(position);
-        intent.putExtra("Name", email.getReceiver());
-        intent.putExtra("Head Mail", email.getSubject());
-        intent.putExtra("Me", email.getSender());
-        intent.putExtra("Content", email.getContent());
-        intent.putExtra("position", position);
+        Intent intent = new Intent(getContext(), DetailMailSentActivity.class);
+
+        // Truyền dữ liệu email vào intent
+        intent.putExtra("sender", email.getSender());
+        intent.putExtra("receiver", email.getReceiver());
+        intent.putExtra("subject", email.getSubject());
+        intent.putExtra("content", email.getContent());
+
         startActivity(intent);
     }
 
@@ -156,6 +169,6 @@ public class SentFragment extends Fragment implements SelectListener {
 
     @Override
     public void onLongItemClick(int position) {
-        // Optional: Handle long-click if needed
+        // Xử lý nếu cần
     }
 }
