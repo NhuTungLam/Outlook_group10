@@ -13,23 +13,23 @@ import vn.edu.usth.outlook.Email_receiver;
 import vn.edu.usth.outlook.R;
 import vn.edu.usth.outlook.listener.SelectListener;
 
-public class DeletedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ArchivedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_RECEIVER = 1;
     private static final int TYPE_SENT = 2;
 
     private Context context;
-    private List<Object> deletedEmails;
+    private List<Object> archivedEmails;
     private SelectListener selectListener;
 
-    public DeletedAdapter(Context context, List<Object> deletedEmails, SelectListener selectListener) {
+    public ArchivedAdapter(Context context, List<Object> archivedEmails, SelectListener selectListener) {
         this.context = context;
-        this.deletedEmails = deletedEmails;
+        this.archivedEmails = archivedEmails;
         this.selectListener = selectListener;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (deletedEmails.get(position) instanceof Email_receiver) {
+        if (archivedEmails.get(position) instanceof Email_receiver) {
             return TYPE_RECEIVER;
         } else {
             return TYPE_SENT;
@@ -52,15 +52,15 @@ public class DeletedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         holder.itemView.setOnClickListener(v -> selectListener.onItemClicked(position)); // Xử lý sự kiện nhấp
         if (holder instanceof DeletedInboxViewHolder) {
-            ((DeletedInboxViewHolder) holder).bind((Email_receiver) deletedEmails.get(position));
+            ((DeletedInboxViewHolder) holder).bind((Email_receiver) archivedEmails.get(position));
         } else {
-            ((DeletedSentViewHolder) holder).bind((Email_Sent) deletedEmails.get(position));
+            ((DeletedSentViewHolder) holder).bind((Email_Sent) archivedEmails.get(position));
         }
     }
 
     @Override
     public int getItemCount() {
-        return deletedEmails.size();
+        return archivedEmails.size();
     }
 
     static class DeletedInboxViewHolder extends RecyclerView.ViewHolder {

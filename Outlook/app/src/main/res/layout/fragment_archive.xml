@@ -5,56 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ArchiveFragment">
 
-    <RelativeLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_archived"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/nothinginArchive"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/nothing_in_archive"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="150dp"
-            >
-        </ImageView>
-
-        <TextView
-            android:id="@+id/firstLineInArchive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nothing_in_archive"
-            android:textSize="17sp"
-            android:textColor="@color/black"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/nothinginArchive"
-            android:fontFamily="@font/abadi_mt_bold"
-            >
-        </TextView>
-        <TextView
-            android:id="@+id/secondLineInArchive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/in_archive"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:layout_below="@+id/firstLineInArchive"
-            android:layout_marginTop="10dp"
-            >
-        </TextView>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.6"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/secondLineInArchive"
-            android:text="@string/go_to_inbox"
-            android:textColor="@color/blue_character"
-            android:background="@drawable/nav_item_background"
-            />
-    </RelativeLayout>
-
+        android:layout_height="match_parent" />
 </FrameLayout>
