@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
         }
 
         String email = preferences.getString("loggedInEmail", "No email available");
-        String username = preferences.getString("loggedInEmail", "No username available");
+        String username = preferences.getString("loggedInUsername", "No username available");
 
 
 
