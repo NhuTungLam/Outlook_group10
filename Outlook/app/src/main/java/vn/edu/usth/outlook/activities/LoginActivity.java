@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.preference.PreferenceManager;
+
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,12 +37,30 @@ public class LoginActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
-        // Set padding for system bars
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.login_root), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn)
+        {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+        View loginRoot = findViewById(R.id.login_root);
+
+        // Kiểm tra và gán listener
+        if (loginRoot != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(loginRoot, (v, insets) -> {
+                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);                return insets;
+            });
+        } else {
+            Log.e("MyApp", "View loginRoot not found");
+        }
+
+
 
         // Initialize views
         usernameEditText = findViewById(R.id.usernameLogin);
@@ -109,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
             // Lấy email của người dùng từ database và lưu vào SharedPreferences
             String email = databaseHelper.getUserEmail(username);
             editor.putString("loggedInEmail", email);
+            editor.putString("loggedInUsername", username);
             editor.apply();
 
             // Chuyển hướng đến MainActivity

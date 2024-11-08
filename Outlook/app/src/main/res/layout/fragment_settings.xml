@@ -43,6 +43,7 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:layout_below="@+id/text1"
+                android:id="@+id/email_user"
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
