@@ -96,6 +96,7 @@ public class SentFragment extends Fragment implements SelectListener {
     private void handleDelete(int position) {
         deletedMail = emailList.get(position);
 
+
         // Đánh dấu email là đã xóa trong cơ sở dữ liệu
 //        dbHelper.markEmailAsDeleted(deletedMail.getId());
 
@@ -107,6 +108,7 @@ public class SentFragment extends Fragment implements SelectListener {
 //        if (deletedFragment != null) {
 //            deletedFragment.refreshDeletedEmails();
 //        }
+
 
         Snackbar.make(recyclerView, "Email deleted", Snackbar.LENGTH_LONG)
                 .setAction("Undo", v -> undoDelete(position))

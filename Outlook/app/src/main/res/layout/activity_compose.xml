@@ -17,11 +17,12 @@
         android:background="@color/blue_theme">
 
         <ImageButton
-            android:id="@+id/backBtn"
+            android:id="@+id/btnBack"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_weight="0.5"
+            android:contentDescription="back_button"
             android:background="@color/blue_theme"
             android:src="@drawable/close"/>
 

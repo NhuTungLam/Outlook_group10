@@ -3,26 +3,37 @@ package vn.edu.usth.outlook;
 import android.widget.ImageView;
 
 public class Email_receiver {
-    String sender;
-    String subject;
-    String content;
-    String receiver;
+    private Integer id; // Thêm id để dễ quản lý từng email
+    private String sender;
+    private String subject;
+    private String content;
+    private String receiver;
+    private ImageView profile;
 
-
-
-
-    ImageView profile;
-
-
-    public Email_receiver(String sender,String receiver ,String subject, String content) {
-        this.sender = sender;
-        this.subject = subject;
-        this.content = content;
-        this.receiver = receiver;
-
+    // Default constructor
+    public Email_receiver() {
+        // Required for certain frameworks or Firebase
     }
 
+    // Constructor đầy đủ
+    public Email_receiver(Integer id, String sender, String receiver, String subject, String content) {
+        this.id = id;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.subject = subject;
+        this.content = content;
+    }
 
+    // Getter và Setter cho id
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    // Getter và Setter cho sender
     public String getSender() {
         return sender;
     }
@@ -31,6 +42,7 @@ public class Email_receiver {
         this.sender = sender;
     }
 
+    // Getter và Setter cho subject
     public String getSubject() {
         return subject;
     }
@@ -39,6 +51,7 @@ public class Email_receiver {
         this.subject = subject;
     }
 
+    // Getter và Setter cho content
     public String getContent() {
         return content;
     }
@@ -47,9 +60,12 @@ public class Email_receiver {
         this.content = content;
     }
 
-    public String getReceiver() {return receiver;}
+    // Getter và Setter cho receiver
+    public String getReceiver() {
+        return receiver;
+    }
 
-    public void setReceiver(String receiver) {this.receiver = receiver;}
-
-
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
 }

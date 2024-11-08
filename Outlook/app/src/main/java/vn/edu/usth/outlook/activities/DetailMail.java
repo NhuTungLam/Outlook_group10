@@ -1,31 +1,19 @@
 package vn.edu.usth.outlook.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import vn.edu.usth.outlook.Email_receiver;
 import vn.edu.usth.outlook.R;
 import vn.edu.usth.outlook.database.DatabaseHelper;
-import vn.edu.usth.outlook.listener.OnSwipeTouchListener;
 
-public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class DetailMail extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
     private int emailId;
@@ -39,6 +27,7 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         // Change status bar background
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.background_all));
@@ -46,9 +35,11 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
 
         dbHelper = new DatabaseHelper(this); // Initialize the database helper
 
+
         // Nhận thông tin email từ intent khi mở từ SentFragment
         Intent intent = getIntent();
         if (intent != null) {
+
             emailId = intent.getIntExtra("email_id", 1); // Lấy ID của email để dễ quản lý
             senderEmail = intent.getStringExtra("sender");
             receiverEmail = intent.getStringExtra("receiver");
@@ -62,6 +53,7 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
             finish();
             return;
         }
+
 
         // Ánh xạ các `TextView` trong giao diện XML
         TextView senderGmailTextView = findViewById(R.id.SenderGmailHere);
@@ -93,16 +85,13 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
         popup.show();
     }
 
-    public void morevertPopup(View view) {
-        PopupMenu popup = new PopupMenu(this, view);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.options_more_vert);
-        popup.show();
+
     }
 
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        return false;
+    protected void onDestroy() {
+        super.onDestroy();
+        dbHelper.close();
     }
 
     @Override

@@ -65,6 +65,7 @@ public class DetailMailSentActivity extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.back_icon);
         backButton.setOnClickListener(v -> finish());
 
+
         Button replyIcon = findViewById(R.id.reply_button);
         replyIcon.setOnClickListener(v -> {
             Intent intentsent = new Intent(DetailMailSentActivity.this, ComposeActivity.class);
@@ -79,6 +80,7 @@ public class DetailMailSentActivity extends AppCompatActivity {
 //            Toast.makeText(this, "Email marked as deleted", Toast.LENGTH_SHORT).show();
 //            finish();
 //        });
+
     }
 
     @Override
