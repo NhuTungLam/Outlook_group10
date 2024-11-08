@@ -24,7 +24,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -32,12 +31,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
-import vn.edu.usth.outlook.Email_Sender;
+
+import vn.edu.usth.outlook.Email_receiver;
 import vn.edu.usth.outlook.KeyboardVisibilityUtils;
 import vn.edu.usth.outlook.R;
+import vn.edu.usth.outlook.adapter.ReceiveAdapter;
 import vn.edu.usth.outlook.fragment.AppContactFragment;
 import vn.edu.usth.outlook.fragment.ArchiveFragment;
 import vn.edu.usth.outlook.fragment.CalendarFragment;
@@ -50,15 +51,14 @@ import vn.edu.usth.outlook.fragment.SentFragment;
 import vn.edu.usth.outlook.fragment.SettingsFragment;
 import vn.edu.usth.outlook.fragment.UnwantedFragment;
 import vn.edu.usth.outlook.listener.SelectListener;
-import vn.edu.usth.outlook.adapter.CustomAdapter;
 import vn.edu.usth.outlook.fragment.InboxFragment;
 
 public class MainActivity extends AppCompatActivity implements SelectListener, KeyboardVisibilityUtils.OnKeyboardVisibilityListener {
 
     RecyclerView recyclerView;
     //    List<Email> List;
-    public static List<Email_Sender> emailList = new ArrayList<>();
-    CustomAdapter customAdapter;
+    public static List<Email_receiver> emailList = new ArrayList<>();
+    ReceiveAdapter customAdapter;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -357,8 +357,8 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
 
     //  Search bar
     private void filter(String newText) {
-        List<Email_Sender> filteredList = new ArrayList<>();
-        for (Email_Sender item : emailList) {
+        List<Email_receiver> filteredList = new ArrayList<>();
+        for (Email_receiver item : emailList) {
             if (item.getSender().toLowerCase().startsWith(newText.toLowerCase())) {
                 filteredList.add(item);
             }

@@ -8,8 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.database.Cursor;
-import vn.edu.usth.outlook.Email_Sender;
+
 import vn.edu.usth.outlook.Email_Sent;
 import vn.edu.usth.outlook.Email_receiver;
 

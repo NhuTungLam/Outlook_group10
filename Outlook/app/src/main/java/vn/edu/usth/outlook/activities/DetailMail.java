@@ -20,7 +20,6 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.edu.usth.outlook.Email_Sender;
 import vn.edu.usth.outlook.R;
 import vn.edu.usth.outlook.database.DatabaseHelper;
 import vn.edu.usth.outlook.listener.OnSwipeTouchListener;
