@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database and Table names
     private static final String DATABASE_NAME = "users.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3; // Tăng version để thực hiện nâng cấp
 
     // User Table
     private static final String TABLE_USER = "user";
@@ -32,9 +32,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_SENDER = "sender";
     private static final String COL_RECEIVER = "receiver";
     private static final String COL_SUBJECT = "subject";
-    private static final String COL_Content = "content";
-    private static final String COL_TIMESTAMP = "timestamp";
-    private static final String COL_IS_READ = "is_read";
+    private static final String COL_CONTENT = "content";
+    private static final String COL_IS_DELETED = "is_deleted";
+    private static final String COL_IS_ARCHIVED = "is_archived";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -57,16 +58,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_SENDER + " TEXT, " +
                 COL_RECEIVER + " TEXT, " +
                 COL_SUBJECT + " TEXT, " +
-                COL_Content + " TEXT " +
+                COL_CONTENT + " TEXT, " +
+                COL_IS_DELETED + " INTEGER DEFAULT 0, " +
+                COL_IS_ARCHIVED + " INTEGER DEFAULT 0" +
                 ")");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EMAIL);
-        onCreate(db);
+        if (oldVersion < 3) {
+            // Kiểm tra và thêm cột is_deleted nếu chưa tồn tại
+            if (!isColumnExists(db, TABLE_EMAIL, COL_IS_DELETED)) {
+                db.execSQL("ALTER TABLE " + TABLE_EMAIL + " ADD COLUMN " + COL_IS_DELETED + " INTEGER DEFAULT 0");
+            }
+
+            // Kiểm tra và thêm cột is_archived nếu chưa tồn tại
+            if (!isColumnExists(db, TABLE_EMAIL, COL_IS_ARCHIVED)) {
+                db.execSQL("ALTER TABLE " + TABLE_EMAIL + " ADD COLUMN " + COL_IS_ARCHIVED + " INTEGER DEFAULT 0");
+            }
+        }
     }
+
+    // Hàm kiểm tra sự tồn tại của cột trong bảng
+    private boolean isColumnExists(SQLiteDatabase db, String tableName, String columnName) {
+        Cursor cursor = db.rawQuery("PRAGMA table_info(" + tableName + ")", null);
+        int columnIndex = cursor.getColumnIndex("name");
+        while (cursor.moveToNext()) {
+            if (cursor.getString(columnIndex).equals(columnName)) {
+                cursor.close();
+                return true;
+            }
+        }
+        cursor.close();
+        return false;
+    }
+
 
     // Insert new user into the User table
     public boolean insertUser(String email, String username, String phone, String password) {
@@ -80,6 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result != -1;
     }
+
     // Get the email of a user based on their username
     public String getUserEmail(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -136,26 +163,97 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean sendEmail(String sender, String receiver, String subject, String content) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("sender", sender);
-        values.put("receiver", receiver);
-        values.put("subject", subject);
-        values.put("content", content);
+        values.put(COL_SENDER, sender);
+        values.put(COL_RECEIVER, receiver);
+        values.put(COL_SUBJECT, subject);
+        values.put(COL_CONTENT, content);
 
-        long result = db.insert("emails", null, values);
+        long result = db.insert(TABLE_EMAIL, null, values);
         db.close();
 
         return result != -1;
     }
 
-
-    // Retrieve emails for a specific user (inbox)
-    public Cursor getUserEmails(String receiver) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_EMAIL +
-                " WHERE " + COL_RECEIVER + " = ?" +
-                " ORDER BY " + COL_TIMESTAMP + " DESC", new String[]{receiver});
+    // Mark email as deleted
+    public void markEmailAsDeleted(int emailId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_IS_DELETED, 1);
+        db.update(TABLE_EMAIL, values, COL_SENT_EMAIL_ID + " = ?", new String[]{String.valueOf(emailId)});
+        db.close();
     }
 
+    // Mark email as archived
+    public void markEmailAsArchived(int emailId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_IS_ARCHIVED, 1);
+        db.update(TABLE_EMAIL, values, COL_SENT_EMAIL_ID + " = ?", new String[]{String.valueOf(emailId)});
+        db.close();
+    }
+
+    public List<Email_receiver> getDeletedInboxEmails(String currentUser) {
+        List<Email_receiver> deletedInboxEmails = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM emails WHERE receiver = ? AND is_deleted = 1", new String[]{currentUser});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COL_SENT_EMAIL_ID));
+                String sender = cursor.getString(cursor.getColumnIndexOrThrow(COL_SENDER));
+                String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
+                String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
+                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_CONTENT));
+                deletedInboxEmails.add(new Email_receiver(id, sender, receiver, subject, content));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return deletedInboxEmails;
+    }
+
+    public List<Email_Sent> getDeletedSentEmails(String currentUser) {
+        List<Email_Sent> deletedSentEmails = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM emails WHERE sender = ? AND is_deleted = 1", new String[]{currentUser});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COL_SENT_EMAIL_ID));
+                String sender = cursor.getString(cursor.getColumnIndexOrThrow(COL_SENDER));
+                String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
+                String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
+                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_CONTENT));
+                deletedSentEmails.add(new Email_Sent(id, sender, receiver, subject, content));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return deletedSentEmails;
+    }
+
+
+    public List<Email_Sent> getArchivedEmails() {
+        List<Email_Sent> archivedEmails = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM emails WHERE is_archived = 1", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COL_SENT_EMAIL_ID));
+                String sender = cursor.getString(cursor.getColumnIndexOrThrow(COL_SENDER));
+                String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
+                String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
+                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_CONTENT));
+                archivedEmails.add(new Email_Sent(id, sender, receiver, subject, content));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return archivedEmails;
+    }
 
 
     // Check if the user table has any users (for initial setup)
@@ -171,7 +269,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Query to fetch sent emails where the sender matches the current user
-        String query = "SELECT * FROM " + TABLE_EMAIL + " WHERE " + COL_SENDER + " = ? ORDER BY " + COL_TIMESTAMP + " DESC";
+        String query = "SELECT * FROM " + TABLE_EMAIL + " WHERE " + COL_SENDER + " = ? ORDER BY " + COL_SENT_EMAIL_ID + " DESC";
         Cursor cursor = db.rawQuery(query, new String[]{senderEmail});
 
         // Populate the emailList with email data
@@ -181,7 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String sender = cursor.getString(cursor.getColumnIndexOrThrow(COL_SENDER));
                 String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
                 String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
-                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_Content));
+                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_CONTENT));
 
                 // Create an Email_Sender object and add to list
                 Email_Sent email = new Email_Sent(id ,sender, receiver, subject, content);
@@ -193,12 +291,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return emailList;
     }
+
     public List<Email_receiver> getReceiveEmails(String receiverEmail) {
         List<Email_receiver> emailreceiveList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // Query to fetch sent emails where the sender matches the current user
-        String query = "SELECT * FROM " + TABLE_EMAIL + " WHERE " + COL_RECEIVER + " = ? ORDER BY " + COL_TIMESTAMP + " DESC";
+        // Query to fetch received emails where the receiver matches the current user
+        String query = "SELECT * FROM " + TABLE_EMAIL + " WHERE " + COL_RECEIVER + " = ? ORDER BY " + COL_SENT_EMAIL_ID + " DESC";
         Cursor cursor = db.rawQuery(query, new String[]{receiverEmail});
 
         // Populate the emailList with email data
@@ -208,9 +307,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String sender = cursor.getString(cursor.getColumnIndexOrThrow(COL_SENDER));
                 String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
                 String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
-                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_Content));
-                // Create an Email_Sender object and add to list
-                Email_receiver email = new Email_receiver(id,sender, receiver, subject, content);
+                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_CONTENT));
+                // Create an Email_Receiver object and add to list
+                Email_receiver email = new Email_receiver(id, sender, receiver, subject, content);
                 emailreceiveList.add(email);
             } while (cursor.moveToNext());
         }
@@ -219,6 +318,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return emailreceiveList;
     }
-
-
 }

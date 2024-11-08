@@ -38,7 +38,7 @@
 
 
         <ImageButton
-            android:id="@+id/emailSender"
+            android:id="@+id/archive_button"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_centerVertical="true"
@@ -53,7 +53,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/emailSender"
+            android:layout_toStartOf="@+id/archive_button"
             android:layout_marginHorizontal="4dp"
             android:background="@drawable/nav_item_background"
             android:src="@drawable/ic_delete"/>
@@ -94,8 +94,24 @@
             android:layout_marginTop="10dp"
             android:text="From:"
             android:textColor="@color/black"
-            android:textSize="20dp">
-        </TextView>
+            android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/to_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/From"
+            android:layout_toEndOf="@id/D_imageview"
+            android:layout_marginStart="12dp"
+            android:text="To: "
+            android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/ReceiverGmailHere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/to_label"
+            android:layout_alignBaseline="@id/to_label"
+            android:text="receiver@example.com"
+            android:textColor="@color/black" />
         <TextView
             android:id="@+id/SenderGmailHere"
             android:layout_toRightOf="@id/From"

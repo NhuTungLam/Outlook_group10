@@ -2,14 +2,17 @@ package vn.edu.usth.outlook.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
-import vn.edu.usth.outlook.Email_receiver;
 import vn.edu.usth.outlook.R;
 import vn.edu.usth.outlook.database.DatabaseHelper;
 
@@ -21,82 +24,85 @@ public class DetailMail extends AppCompatActivity {
     private String receiverEmail;
     private String emailSubject;
     private String emailContent;
-    private String emailTimestamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        // Change status bar background
+        // Đặt màu nền cho status bar
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.background_all));
         setContentView(R.layout.activity_detail_mail);
 
-        dbHelper = new DatabaseHelper(this); // Initialize the database helper
+        // Khởi tạo dbHelper
+        dbHelper = new DatabaseHelper(this);
 
-
-        // Nhận thông tin email từ intent khi mở từ SentFragment
+        // Nhận dữ liệu từ Intent
         Intent intent = getIntent();
         if (intent != null) {
-
-            emailId = intent.getIntExtra("email_id", 1); // Lấy ID của email để dễ quản lý
+            emailId = intent.getIntExtra("email_id", -1);
             senderEmail = intent.getStringExtra("sender");
             receiverEmail = intent.getStringExtra("receiver");
             emailSubject = intent.getStringExtra("subject");
             emailContent = intent.getStringExtra("content");
-            emailTimestamp = intent.getStringExtra("timestamp");
         }
 
+        // Kiểm tra emailId hợp lệ
         if (emailId == -1) {
             Toast.makeText(this, "Email ID missing", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-
-        // Ánh xạ các `TextView` trong giao diện XML
+        // Hiển thị thông tin email
         TextView senderGmailTextView = findViewById(R.id.SenderGmailHere);
+        TextView receiverGmailTextView = findViewById(R.id.ReceiverGmailHere);
         TextView subjectTextView = findViewById(R.id.Send_head_email_here);
         TextView contentTextView = findViewById(R.id.Send_content_here);
-        TextView timestampTextView = findViewById(R.id.D_time);
 
-        // Cập nhật giao diện với dữ liệu email
         senderGmailTextView.setText(senderEmail);
+        receiverGmailTextView.setText(receiverEmail);
         subjectTextView.setText(emailSubject);
         contentTextView.setText(emailContent);
-        timestampTextView.setText(emailTimestamp);
+
+        // Nút back
         ImageButton backButton = findViewById(R.id.back_icon);
         backButton.setOnClickListener(v -> finish());
 
+        // Nút trả lời
         Button replyIcon = findViewById(R.id.reply_button);
         replyIcon.setOnClickListener(v -> {
-            Intent intentsent = new Intent(DetailMail.this, ComposeActivity.class);
-            startActivity(intentsent);
+            Intent replyIntent = new Intent(DetailMail.this, ComposeActivity.class);
+            replyIntent.putExtra("receiver", senderEmail);  // Cài đặt người nhận là người gửi email ban đầu
+            startActivity(replyIntent);
+        });
+
+        // Nút xóa email
+        ImageButton deleteButton = findViewById(R.id.delete);
+        deleteButton.setOnClickListener(v -> {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("email_id", emailId); // Truyền email ID để Fragment biết cần xóa email nào
+            setResult(RESULT_OK, resultIntent);
             finish();
+            Toast.makeText(this, "Email marked as deleted", Toast.LENGTH_SHORT).show();
+        });
+
+// Nút lưu trữ email
+        ImageButton archiveButton = findViewById(R.id.archive_button);
+        archiveButton.setOnClickListener(v -> {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("email_id", emailId); // Truyền email ID để Fragment biết cần lưu trữ email nào
+            setResult(RESULT_OK, resultIntent);
+            finish();
+            Toast.makeText(this, "Email archived", Toast.LENGTH_SHORT).show();
         });
     }
 
-
-    public void morePopup(View view) {
-        PopupMenu popup = new PopupMenu(this, view);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.options_head);
-        popup.show();
-    }
-
-
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelper.close();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        dbHelper.close();
+        if (dbHelper != null) {
+            dbHelper.close();
+        }
     }
 }

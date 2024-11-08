@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
     RecyclerView recyclerView;
     //    List<Email> List;
     public static List<Email_receiver> emailList = new ArrayList<>();
-    ReceiveAdapter customAdapter;
+    ReceiveAdapter receiveAdapter;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -99,7 +99,9 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.background_all));
 
         setContentView(R.layout.activity_main);
-
+        if (savedInstanceState == null) {
+            openFragment(new InboxFragment(), "Inbox");
+        }
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -363,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                 filteredList.add(item);
             }
         }
-        customAdapter.filterList(filteredList);
+        receiveAdapter.filterList(filteredList);
     }
 
 
@@ -385,11 +387,15 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
     public void onLongItemClick(int position) {
 
     }
-    // Display items in RecyclerView
     private void displayItems() {
         recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));  // Single column grid (like list)
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+
+        // Khởi tạo emailList và customAdapter
+        emailList = new ArrayList<>();
+        receiveAdapter = new ReceiveAdapter(this, emailList, this);
+        recyclerView.setAdapter(receiveAdapter);
     }
 
     private void openFragment(Fragment fragment,String title) {

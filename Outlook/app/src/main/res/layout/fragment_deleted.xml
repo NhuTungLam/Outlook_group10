@@ -1,59 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.DeletedFragment">
+    android:padding="8dp">
 
-    <RelativeLayout
+    <!-- Placeholder layout khi danh sách email đã xóa rỗng -->
+    <LinearLayout
+        android:id="@+id/deleted_placeholder_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/nothinginDeleted"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/nothing_in_deleted"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="150dp"
-            />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/firstLineInDeleted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nothing_in_deleted"
-            android:textSize="17sp"
-            android:textColor="@color/black"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/nothinginDeleted"
-            android:fontFamily="@font/abadi_mt_bold"
-            >
-        </TextView>
-        <TextView
-            android:id="@+id/secondLineInDeleted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/look_empty"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:layout_below="@+id/firstLineInDeleted"
-            android:layout_marginTop="10dp"
-            >
-        </TextView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.6"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/secondLineInDeleted"
-            android:text="@string/go_to_inbox"
-            android:textColor="@color/blue_character"
-            android:background="@drawable/nav_item_background"
-            />
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/nothinginDeleted"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/nothing_in_deleted"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="150dp" />
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/firstLineInDeleted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nothing_in_deleted"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/nothinginDeleted"
+                android:fontFamily="@font/abadi_mt_bold" />
+
+            <TextView
+                android:id="@+id/secondLineInDeleted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/look_empty"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_below="@id/firstLineInDeleted"
+                android:layout_marginTop="10dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.6"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/secondLineInDeleted"
+                android:text="@string/go_to_inbox"
+                android:textColor="@color/blue_character"
+                android:background="@drawable/nav_item_background" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- RecyclerView để hiển thị danh sách email đã xóa -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_deleted"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
+
+</RelativeLayout>

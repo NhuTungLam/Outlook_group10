@@ -1,5 +1,7 @@
 package vn.edu.usth.outlook.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,7 +26,7 @@ import vn.edu.usth.outlook.listener.SelectListener;
 import vn.edu.usth.outlook.adapter.SentAdapter;
 
 public class SentFragment extends Fragment implements SelectListener {
-
+    private static final int REQUEST_CODE_DETAIL_MAIL = 1;
     private RecyclerView recyclerView;
     private SentAdapter sentAdapter;
     private Email_Sent deletedMail = null;
@@ -95,28 +97,10 @@ public class SentFragment extends Fragment implements SelectListener {
     };
     private void handleDelete(int position) {
         deletedMail = emailList.get(position);
+        dbHelper.markEmailAsDeleted(deletedMail.getId()); // Đánh dấu email là đã xóa
 
-
-        // Đánh dấu email là đã xóa trong cơ sở dữ liệu
-//        dbHelper.markEmailAsDeleted(deletedMail.getId());
-
-        emailList.remove(position);
-        sentAdapter.notifyItemRemoved(position);
-
-        // Làm mới DeletedFragment
-//        DeletedFragment deletedFragment = (DeletedFragment) getParentFragmentManager().findFragmentByTag("DeletedFragmentTag");
-//        if (deletedFragment != null) {
-//            deletedFragment.refreshDeletedEmails();
-//        }
-
-
-        Snackbar.make(recyclerView, "Email deleted", Snackbar.LENGTH_LONG)
-                .setAction("Undo", v -> undoDelete(position))
-                .show();
-
-
-        emailList.remove(position);
-        sentAdapter.notifyItemRemoved(position);
+        emailList.remove(position); // Xóa email khỏi danh sách
+        sentAdapter.notifyItemRemoved(position); // Cập nhật adapter
 
         Snackbar.make(recyclerView, "Email deleted", Snackbar.LENGTH_LONG)
                 .setAction("Undo", v -> undoDelete(position))
@@ -132,11 +116,12 @@ public class SentFragment extends Fragment implements SelectListener {
 
     private void handleArchive(int position) {
         final Email_Sent email = emailList.get(position);
-        archivedMail.add(String.valueOf(email));
-        emailList.remove(position);
-        sentAdapter.notifyItemRemoved(position);
+        dbHelper.markEmailAsArchived(email.getId()); // Đánh dấu email là đã lưu trữ
 
-        Snackbar.make(recyclerView, email + ", Archived.", Snackbar.LENGTH_LONG)
+        emailList.remove(position); // Xóa email khỏi danh sách
+        sentAdapter.notifyItemRemoved(position); // Cập nhật adapter
+
+        Snackbar.make(recyclerView, "Email archived", Snackbar.LENGTH_LONG)
                 .setAction("Undo", v -> undoArchive(email, position))
                 .show();
     }
@@ -153,14 +138,32 @@ public class SentFragment extends Fragment implements SelectListener {
         Intent intent = new Intent(getContext(), DetailMailSentActivity.class);
 
         // Truyền dữ liệu email vào intent
+        intent.putExtra("email_id", email.getId());
         intent.putExtra("sender", email.getSender());
         intent.putExtra("receiver", email.getReceiver());
         intent.putExtra("subject", email.getSubject());
         intent.putExtra("content", email.getContent());
 
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_DETAIL_MAIL);
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == REQUEST_CODE_DETAIL_MAIL && resultCode == RESULT_OK && data != null) {
+            int emailId = data.getIntExtra("email_id", -1);
+            if (emailId != -1) {
+                // Loại bỏ email đã xóa khỏi danh sách và cập nhật RecyclerView
+                for (int i = 0; i < emailList.size(); i++) {
+                    if (emailList.get(i).getId() == emailId) {
+                        emailList.remove(i);
+                        sentAdapter.notifyItemRemoved(i);
+                        break;
+                    }
+                }
+            }
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
