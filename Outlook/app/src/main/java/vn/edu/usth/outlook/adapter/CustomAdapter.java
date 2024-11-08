@@ -67,12 +67,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         public CardView cardView;
         public CustomViewHolder(@NonNull View itemView, SelectListener listener) {
             super(itemView);
-            textName = itemView.findViewById(R.id.name);
-            textHeadmail = itemView.findViewById(R.id.head_email);
-            textContent = itemView.findViewById(R.id.content);
-            imageView = itemView.findViewById(R.id.imageview);
-            cardView = itemView.findViewById(R.id.main_container);
-            textDate= itemView.findViewById(R.id.date);
+//            textName = itemView.findViewById(R.id.name);
+//            textHeadmail = itemView.findViewById(R.id.head_email);
+//            textContent = itemView.findViewById(R.id.content);
+//            imageView = itemView.findViewById(R.id.imageview);
+//            cardView = itemView.findViewById(R.id.main_container);
+//            textDate= itemView.findViewById(R.id.date);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

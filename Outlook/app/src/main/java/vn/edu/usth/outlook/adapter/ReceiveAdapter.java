@@ -40,7 +40,7 @@ public class ReceiveAdapter extends RecyclerView.Adapter<ReceiveAdapter.CustomVi
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         // Gán giá trị cho các view trong item layout dựa trên vị trí
         Email_receiver email = list.get(position);
-        holder.textName.setText(email.getReceiver());
+        holder.textName.setText(email.getSender());
         holder.textHeadmail.setText(email.getSubject());
         holder.textContent.setText(email.getContent());
         // Nếu có các thuộc tính khác cần hiển thị, hãy thêm vào đây
@@ -67,12 +67,12 @@ public class ReceiveAdapter extends RecyclerView.Adapter<ReceiveAdapter.CustomVi
 
         public CustomViewHolder(@NonNull View itemView, SelectListener listener) {
             super(itemView);
-//            textName = itemView.findViewById(R.id.nameReceive);
-//            textHeadmail = itemView.findViewById(R.id.head_emailReceive);
-//            textContent = itemView.findViewById(R.id.contentReceive);
-//            imageView = itemView.findViewById(R.id.imageviewReceive);
-//            cardView = itemView.findViewById(R.id.main_containerReceive);
-//            textDate = itemView.findViewById(R.id.dateReceive);
+            textName = itemView.findViewById(R.id.nameReceive);
+            textHeadmail = itemView.findViewById(R.id.head_emailReceive);
+            textContent = itemView.findViewById(R.id.contentReceive);
+            imageView = itemView.findViewById(R.id.imageviewReceive);
+            cardView = itemView.findViewById(R.id.main_containerReceive);
+            textDate = itemView.findViewById(R.id.dateReceive);
 
             itemView.setOnClickListener(view -> {
                 if (listener != null) {

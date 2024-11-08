@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,57 +29,57 @@ import vn.edu.usth.outlook.database.DatabaseHelper;
 import vn.edu.usth.outlook.listener.SelectListener;
 
 
-public class InboxFragment extends Fragment {
+public class InboxFragment extends Fragment implements SelectListener {
 
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerInbox;
     private ReceiveAdapter receiveAdapter;
     private Email_receiver deletedMail = null;
     private List<String> archivedMail = new ArrayList<>();
     private List<Email_receiver> emailReceiveList;
     private DatabaseHelper dbHelper;
-    private View placeholder;
+    private View inboxholder;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_inbox, container, false);
 
         // Khởi tạo RecyclerView và placeholder
-        recyclerView = view.findViewById(R.id.recycler_inbox);
-        placeholder = view.findViewById(R.id.inbox_holder);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        recyclerInbox = view.findViewById(R.id.recycler_inbox);
+        inboxholder = view.findViewById(R.id.inbox_holder);
+        recyclerInbox.setHasFixedSize(true);
+        recyclerInbox.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
         dbHelper = new DatabaseHelper(getContext());
 
         // Lấy email người dùng hiện tại từ SharedPreferences
-        SharedPreferences preferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        String receiveEmail = preferences.getString("loggedInEmail", null);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String loggedInEmail = preferences.getString("loggedInEmail", null);
 
-        if (receiveEmail != null) {
-            emailReceiveList = dbHelper.getReceiveEmails(receiveEmail); // Lấy danh sách email từ DB cho người dùng hiện tại
+        if (loggedInEmail != null) {
+            emailReceiveList = dbHelper.getReceiveEmails(loggedInEmail); // Lấy danh sách email từ DB cho người dùng hiện tại
         } else {
             emailReceiveList = new ArrayList<>(); // Khởi tạo danh sách trống nếu không tìm thấy email
         }
 
         receiveAdapter = new ReceiveAdapter(getContext(), emailReceiveList, (SelectListener) this);
-        recyclerView.setAdapter(receiveAdapter);
+        recyclerInbox.setAdapter(receiveAdapter);
 
         // Hiển thị placeholder nếu danh sách rỗng
         togglePlaceholder();
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        itemTouchHelper.attachToRecyclerView(recyclerInbox);
 
         return view;
     }
 
     private void togglePlaceholder() {
         if (emailReceiveList.isEmpty()) {
-            recyclerView.setVisibility(View.GONE);
-            placeholder.setVisibility(View.VISIBLE);
+            recyclerInbox.setVisibility(View.GONE);
+            inboxholder.setVisibility(View.VISIBLE);
         } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            placeholder.setVisibility(View.GONE);
+            recyclerInbox.setVisibility(View.VISIBLE);
+            inboxholder.setVisibility(View.GONE);
         }
     }
 
@@ -107,7 +108,7 @@ public class InboxFragment extends Fragment {
         emailReceiveList.remove(position);
         receiveAdapter.notifyItemRemoved(position);
 
-        Snackbar.make(recyclerView, "Email deleted", Snackbar.LENGTH_LONG)
+        Snackbar.make(recyclerInbox, "Email deleted", Snackbar.LENGTH_LONG)
                 .setAction("Undo", v -> undoDelete(position))
                 .show();
     }
@@ -126,7 +127,7 @@ public class InboxFragment extends Fragment {
         emailReceiveList.remove(position);
         receiveAdapter.notifyItemRemoved(position);
 
-        Snackbar.make(recyclerView, email + ", Archived.", Snackbar.LENGTH_LONG)
+        Snackbar.make(recyclerInbox, email + ", Archived.", Snackbar.LENGTH_LONG)
                 .setAction("Undo", v -> undoArchive(email, position))
                 .show();
     }
@@ -139,10 +140,9 @@ public class InboxFragment extends Fragment {
 
     @Override
     public void onItemClicked(int position) {
-        Intent intent = new Intent(getActivity(), DetailMail.class);
-        startActivity(intent);
+        Intent intent = new Intent(getContext(), DetailMail.class);
         Email_receiver email = emailReceiveList.get(position);
-        intent.putExtra("Name", email.getReceiver());
+        intent.putExtra("Name", email.getSender());
         intent.putExtra("Head Mail", email.getSubject());
         intent.putExtra("Me", email.getSender());
         intent.putExtra("Content", email.getContent());
@@ -156,6 +156,10 @@ public class InboxFragment extends Fragment {
         if (dbHelper != null) {
             dbHelper.close();
         }
+    }
+    @Override
+    public void onLongItemClick(int position) {
+
     }
 
 
