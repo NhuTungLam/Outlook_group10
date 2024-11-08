@@ -25,7 +25,7 @@
     <string name="report_spam">Báo cáo spam</string>
     <string name="categories">Thể loại</string>
     <string name="reset_account">Khởi động lại tài khoản</string>
-    <string name="remove_account">Lloại bỏ tài khoản</string>
+    <string name="remove_account">Loại bỏ tài khoản</string>
     <string name="avatar">Ảnh đại diện</string>
     <string name="New_mail">Thư mới</string>
     <string name="Name">Tên</string>
@@ -40,8 +40,9 @@
     <string name="Notification">Thông báo</string>
     <string name="Search">Tìm kiếm</string>
     <string name="nothing_in_archive">Không có gì trong Lưu trữ</string>
+    <string name="nothing_in_junk">Không có gì trong thư rác</string>
     <string name="in_archive">Dọn sạch hôp thư đến của bạn bằn\ncách di chuyển tin nhắn sang Lưu trữ</string>
-    <string name="go_to_inbox">ĐI ĐẾN HỘP THƯ</string>
+    <string name="go_to_inbox">ĐI ĐẾN HỘP THƯ NHẬN</string>
     <string name="nothing_in_deleted">Không có gì trong Đã xóa</string>
     <string name="look_empty">Có vẻ ở đây chưa có nội dung gì</string>
     <string name="nothing_in_draft">Không có gì trong Nháp</string>
@@ -59,7 +60,7 @@
     <string name="move_to_other">Di chuyên đến nơi khác</string>
     <string name="report_junk">Báo cáo thư rác</string>
     <string name="ignore_conversation">Bỏ qua đoạn hội thoại</string>
-    <string name="forward_as_attachment">Chuyển tiêp dạng đính kèm</string>
+    <string name="forward_as_attachment">Chuyển tiếp dạng đính kèm</string>
     <string name="mark_as_unread">Đánh dấu đã đọc</string>
     <string name="frag">Đánh dấu</string>
     <string name="pin">Ghim</string>
@@ -73,14 +74,61 @@
 <!--separate-->
 
     <string name="question_con">Question con</string>
-    <string name="account_description">Account Description</string>
-    <string name="try_resetting_the_account_if_you_have_sync_issues">Try resetting the account if you have sync issues</string>
+    <string name="account_description">Thông tin tài khoản</string>
+    <string name="try_resetting_the_account_if_you_have_sync_issues">Hãy thử đặt lại tài khoản nếu bạn gặp sự cố đồng bộ hóa</string>
 
     =======
 
     <string name="you_have_no_contacts_yet">Không có liên hệ</string>
     <string name="No_new_notifications">Không có thông báo mới</string>
     <string name="Please_check_back_later">Vui lòng kiểm tra lại sau</string>
-    <string name="removing_this_account_from_the_app_will_delete_any_local_data_stored_in_the_app">Xóa tài khoản này khỏi ứng dụng sẽ xóa tất cả dữ liệu cục bộ</string>
-<!--testing-->
+    <string name="removing_this_account_from_the_app_will_delete_any_local_data_stored_in_the_app">Loại bỏ tài khoản này khỏi ứng dụng sẽ xóa tất cả dữ liệu cục bộ</string>
+    <string name="back">quay lại</string>
+    <string name="tue">thứ 3</string>
+    <string name="sun">chủ nhật</string>
+    <string name="nov_2024">thg 11 2024</string>
+    <string name="mon">thứ 2</string>
+    <string name="wed">thứ 4</string>
+    <string name="thur">thứ 5</string>
+    <string name="fri">thứ 6</string>
+    <string name="sat">thứ 7</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Mật khẩu</string>
+    <string name="action_sign_in">Đăng nhập hoặc đăng kí</string>
+    <string name="action_sign_in_short">Đăng nhập</string>
+    <string name="welcome">"Chào mừng!"</string>
+    <string name="invalid_username">Tên không hợp lệ</string>
+    <string name="invalid_password">Mật khẩu phải lớn hơn 5 kí tự</string>
+    <string name="login_failed">"Đăng nhập thất bại"</string>
+    <string name="sign_up">Đăng kí</string>
+    <string name="log_in">Đăng nhập</string>
+    <string name="don_t_have_an_account">Chưa có tài khoản?</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="password">Mật khẩu</string>
+    <string name="username">Tên người dùng</string>
+    <string name="welcome_to_outlook">Chào mừng quay trở lại Outlook</string>
+    <string name="outlook_login">Outlook đăng nhập</string>
+    <string name="new_email">Email mới</string>
+    <string name="please_input_information">Xin vui lòng nhập thông tin</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="please_input_phone_number">Xin vui lòng nhập số điện thoạir</string>
+    <string name="please_input_email">Xin vui lòng nhập email</string>
+    <string name="new_username">Tên đăng nhập mới</string>
+    <string name="please_input_username">Xin vui lòng nhập tên đăng nhập</string>
+    <string name="new_password">Mật khẩu mới</string>
+    <string name="please_input_password">Xin vui lòng nhập mật khẩu</string>
+    <string name="confirm_password">Mật khẩu xác thực</string>
+    <string name="please_confirm_password">Xin vui lòng nhập mật khẩu xác thực</string>
+    <string name="already_have_account">Đã có tài khoản?</string>
+    <string name="invalid_phone_number">Số điện thoại không hợp lệ</string>
+    <string name="invalid_confirm_email">Tài khoản xác thực không hợp lệ</string>
+    <string name="invalid_email">Tài khoản email không hợp lệ</string>
+    <string name="username_not_exist">Tên đăng nhập không tồn tại</string>
+    <string name="incorect_password">Mật khẩu sai</string>
+    <string name="invalid_password_format">Mật khẩu không đúng quy định</string>
+    <string name="passwords_do_not_match">Mật khẩu không trùng khớp</string>
+    <string name="set_a_new_password">Cài đặt mật khẩu mới</string>
+    <string name="create_a_new_password_ensure_it_differs_from_previous_ones_for_security">Cài đặt mật khẩu mới. Hãy cài mật khẩu khác với trước đó để bảo mật</string>
+    <string name="log_out">Đăng xuất</string>
 </resources>

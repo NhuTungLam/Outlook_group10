@@ -123,7 +123,7 @@
     <string name="passwords_do_not_match">Passwords do not match</string>
     <string name="set_a_new_password">Set a new password</string>
     <string name="create_a_new_password_ensure_it_differs_from_previous_ones_for_security">Create a new password. Ensure it differs from previous ones for security</string>
-    <string name="log_out" />
+    <string name="log_out">Log out</string>
 
     >>>>>>> testing
 </resources>
