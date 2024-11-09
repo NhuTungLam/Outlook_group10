@@ -131,6 +131,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
+    public boolean checkPasswordExist(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USER + " WHERE " + COL_EMAIL + " = ? AND " + COL_PASSWORD + " = ?", new String[]{email, password});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+
     // Check if username already exists
     public boolean checkUsernameExists(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -318,4 +326,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return emailreceiveList;
     }
+
+    public boolean updatePassword(String email, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_PASSWORD, newPassword);
+
+        int rowsUpdated = db.update(TABLE_USER, values, COL_EMAIL + " = ?", new String[]{email});
+        return rowsUpdated > 0;
+    }
+
+
 }

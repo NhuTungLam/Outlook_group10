@@ -124,6 +124,14 @@
     <string name="set_a_new_password">Set a new password</string>
     <string name="create_a_new_password_ensure_it_differs_from_previous_ones_for_security">Create a new password. Ensure it differs from previous ones for security</string>
     <string name="log_out">Log out</string>
+    <string name="confirm_new_password">confirm new password</string>
+    <string name="duplicate_old_password">duplicate old password</string>
+    <string name="password_must_match_new_password">Password must match new password</string>
+    <string name="enter_your_email">enter_your_email</string>
+    <string name="email_not_exist">Email not exist</string>
+    <string name="enter_your_new_password">Enter your new password</string>
+    <string name="please_input_new_password">please input new password</string>
+    <string name="reset_password">reset password</string>
 
     >>>>>>> testing
 </resources>
