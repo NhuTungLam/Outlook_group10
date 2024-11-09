@@ -68,7 +68,7 @@
                                 android:layout_marginEnd="8dp"
                                 android:layout_centerHorizontal="true"
                                 android:visibility="gone"
-                                app:queryHint="@string/search_in_mail"
+                                app:queryHint="Mail,Events,People,Files"
                                 app:iconifiedByDefault="false"
                                 android:iconifiedByDefault="false"
                                 app:searchIcon="@null"/>

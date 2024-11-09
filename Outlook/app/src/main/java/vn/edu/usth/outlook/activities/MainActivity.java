@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -84,7 +85,8 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.background_all));
 
         setContentView(R.layout.activity_main);
-
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ggicon);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -96,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         ImageView searchIcon = findViewById(R.id.search_icon);
         searchView = findViewById(R.id.search_view);
-        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         searchIcon.bringToFront();
@@ -235,7 +236,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                     compose_button.setText(R.string.compose);
                     compose_button.setIconResource(R.drawable.ic_compose);
                     compose_button.setVisibility(View.VISIBLE);
-                    toolbar.removeView(textView_meetings);
                     openFragment(new InboxFragment());
                     return true;
                 } else if (itemId == R.id.contact) {
@@ -244,7 +244,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                     searchView.setQueryHint(getString(R.string.search_in_chat_and_spaces));
                     compose_button.setText(R.string.new_contact);
                     compose_button.setVisibility(View.VISIBLE);
-                    toolbar.removeView(textView_meetings);
                     openFragment(new ContactFragment());
                     return true;
                 } else if (itemId == R.id.calendar) {
