@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+<<<<<<< Updated upstream
+=======
+import android.widget.PopupMenu;
+import android.widget.Button;
+>>>>>>> Stashed changes
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -19,11 +24,14 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< Updated upstream
 import vn.edu.usth.outlook.Email_Sender;
 import vn.edu.usth.outlook.R;
 import vn.edu.usth.outlook.db.DatabaseHelper; // Import your database helper
 import vn.edu.usth.outlook.listener.OnSwipeTouchListener;
 
+=======
+>>>>>>> Stashed changes
 public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private DatabaseHelper dbHelper;
@@ -188,11 +196,76 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
         popup.show();
     }
 
+<<<<<<< Updated upstream
+=======
+        // Nút xóa email
+        ImageButton deleteButton = findViewById(R.id.delete);
+        deleteButton.setOnClickListener(v -> {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("email_id", emailId); // Truyền email ID để Fragment biết cần xóa email nào
+            setResult(RESULT_OK, resultIntent);
+            finish();
+            Toast.makeText(this, "Email marked as deleted", Toast.LENGTH_SHORT).show();
+        });
+
+        // Nút lưu trữ email
+        ImageButton archiveButton = findViewById(R.id.archive_button);
+        archiveButton.setOnClickListener(v -> {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("email_id", emailId); // Truyền email ID để Fragment biết cần lưu trữ email nào
+            setResult(RESULT_OK, resultIntent);
+            finish();
+            Toast.makeText(this, "Email archived", Toast.LENGTH_SHORT).show();
+        });
+
+        //popup more
+        ImageButton popupButton = findViewById(R.id.more);
+        popupButton.setOnClickListener(view -> morePopup(view));
+
+        //popup more_vert
+        ImageButton popupButton2 = findViewById(R.id.more_vert);
+        popupButton2.setOnClickListener(view -> morevertPopup(view));
+    }
+
+    // Method for the "more" popup menu
+    public void morePopup(View view) {
+        PopupMenu popup = new PopupMenu(this, view);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.options_head);
+        popup.show();
+    }
+
+    // Method for the "more_vert" popup menu
+>>>>>>> Stashed changes
     public void morevertPopup(View view) {
         PopupMenu popup = new PopupMenu(this, view);
         popup.setOnMenuItemClickListener(this);
         popup.inflate(R.menu.options_more_vert);
         popup.show();
+<<<<<<< Updated upstream
+=======
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.move_to_folder) {
+            Toast.makeText(this,  "Move to Folder selected", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.report_junk) {
+            Toast.makeText(this, "Reported as Junk", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.reply) {
+            Toast.makeText(this, "Reply selected", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.date_popup) {
+            Toast.makeText(this, "Date: Sep 20, 2023, 10:12 AM", Toast.LENGTH_SHORT).show();
+            return true;
+        } else {
+            return false;
+        }
+>>>>>>> Stashed changes
     }
 
     @Override
