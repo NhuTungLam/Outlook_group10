@@ -79,7 +79,7 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
         });
 
         // Nút xóa email
-        ImageButton deleteButton = findViewById(R.id.delete);
+        ImageButton deleteButton = findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(v -> {
             Intent resultIntent = new Intent();
             resultIntent.putExtra("email_id", emailId); // Truyền email ID để Fragment biết cần xóa email nào
@@ -88,7 +88,7 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
             Toast.makeText(this, "Email marked as deleted", Toast.LENGTH_SHORT).show();
         });
 
-// Nút lưu trữ email
+//
         ImageButton archiveButton = findViewById(R.id.archive_button);
         archiveButton.setOnClickListener(v -> {
             Intent resultIntent = new Intent();
@@ -99,7 +99,7 @@ public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuIte
         });
 
 
-        ImageButton popupButton = findViewById(R.id.more_detail_upper);
+        ImageButton popupButton = findViewById(R.id.more);
         popupButton.setOnClickListener(view -> morePopup(view));
 
         //popup more_vert
