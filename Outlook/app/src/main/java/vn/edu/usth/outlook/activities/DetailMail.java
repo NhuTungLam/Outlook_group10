@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,7 @@ import androidx.core.content.ContextCompat;
 import vn.edu.usth.outlook.R;
 import vn.edu.usth.outlook.database.DatabaseHelper;
 
-public class DetailMail extends AppCompatActivity {
+public class DetailMail extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private DatabaseHelper dbHelper;
     private int emailId;
@@ -96,6 +97,77 @@ public class DetailMail extends AppCompatActivity {
             finish();
             Toast.makeText(this, "Email archived", Toast.LENGTH_SHORT).show();
         });
+
+
+        ImageButton popupButton = findViewById(R.id.more_detail_upper);
+        popupButton.setOnClickListener(view -> morePopup(view));
+
+        //popup more_vert
+        ImageButton popupButton2 = findViewById(R.id.more_vert);
+        popupButton2.setOnClickListener(view -> morevertPopup(view));
+    }
+
+    // Method for the "more" popup menu
+    public void morePopup(View view) {
+        PopupMenu popup = new PopupMenu(this, view);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.options_head);
+        popup.show();
+    }
+
+    // Method for the "more_vert" popup menu
+    public void morevertPopup(View view) {
+        PopupMenu popup = new PopupMenu(this, view);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.options_more_vert);
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.move_to_folder) {
+            Toast.makeText(this,  "Move to Folder selected", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.report_junk) {
+            Toast.makeText(this, "Reported as Junk", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.move_to_other) {
+            Toast.makeText(this, "Reported as Junk", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.forward_as_attachment) {
+            Toast.makeText(this, "Reply selected", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.ignore_conversation) {
+            Toast.makeText(this, "Reported as Junk", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.mark_as_unread) {
+            Toast.makeText(this, "Reply selected", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.frag) {
+            Toast.makeText(this, "Reported as Junk", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.pin) {
+                Toast.makeText(this, "Reply selected", Toast.LENGTH_SHORT).show();
+                return true;
+        } else if (itemId == R.id.snooze) {
+                Toast.makeText(this, "Reported as Junk", Toast.LENGTH_SHORT).show();
+                return true;
+        } else if (itemId == R.id.forward) {
+            Toast.makeText(this, "Reply selected", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.deleted) {
+            Toast.makeText(this, "Reported as Junk", Toast.LENGTH_SHORT).show();
+            return true;
+
+        } else if (itemId == R.id.reply) {
+            Toast.makeText(this, "Reply selected", Toast.LENGTH_SHORT).show();
+            return true;
+
+        } else {
+            return false;
+        }
     }
 
     @Override
