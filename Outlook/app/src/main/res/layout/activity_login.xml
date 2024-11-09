@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_all"
     android:padding="16dp">
 
 
@@ -51,6 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:hint="@string/username"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/black"
             android:inputType="text" />
         <TextView
             android:id="@+id/notInputUsername"
@@ -75,6 +78,8 @@
             android:layout_marginBottom="8dp"
             android:autofillHints=""
             android:hint="@string/password"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/black"
             android:inputType="textPassword" />
         <TextView
             android:id="@+id/notInputPassword"
@@ -116,7 +121,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/don_t_have_an_account" />
+                android:text="@string/don_t_have_an_account"
+                android:textColor="@color/black"
+                />
 
 
             <TextView
@@ -137,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/log_in"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:backgroundTint="@color/blue_character"
             app:cornerRadius="16dp"
             android:padding="12dp" />
