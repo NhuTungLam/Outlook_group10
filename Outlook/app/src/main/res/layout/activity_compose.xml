@@ -44,10 +44,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/new_message"
+                android:textColor="@color/black"
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/emailSender"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="email@gmail.com" />
@@ -68,6 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/to"
+                android:textColor="@color/black"
                 android:layout_marginStart="8dp"
                 android:paddingTop="17dp"
                 android:textSize="20sp" />
@@ -78,6 +81,8 @@
                 android:layout_height="match_parent"
                 android:inputType="textEmailAddress"
                 android:paddingStart="40dp"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <ImageButton
@@ -95,6 +100,8 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:hint="@string/Subject"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/black"
             android:paddingHorizontal="10dp" />
 
         <EditText
@@ -103,6 +110,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:hint="@string/Message"
+            android:textColor="@color/black"
             android:gravity="start"
             android:paddingHorizontal="10dp"
             android:textAlignment="textStart" />
