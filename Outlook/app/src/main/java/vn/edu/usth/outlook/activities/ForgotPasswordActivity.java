@@ -108,6 +108,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         if (isValid && databaseHelper.updatePassword(email, newPassword)) {
             // Cập nhật thành công, hiển thị thông báo
             Toast.makeText(this, "Mật khẩu đã được cập nhật thành công!", Toast.LENGTH_SHORT).show();
+            // Navigate back to the LoginActivity after successful password reset
+            Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             // Cập nhật thất bại, hiển thị thông báo lỗi chi tiết hơn
             if (!isValid) {

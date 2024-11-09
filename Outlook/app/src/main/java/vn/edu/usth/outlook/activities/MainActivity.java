@@ -232,6 +232,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, K
                 drawerLayout.closeDrawer(GravityCompat.START);
 
                 if (item.getItemId() == R.id.inbox) {
+                    searchIcon.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.VISIBLE);
                     notificationIcon.setVisibility(View.VISIBLE);
                     openFragment(new InboxFragment(),"Inbox");
