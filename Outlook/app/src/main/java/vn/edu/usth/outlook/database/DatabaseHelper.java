@@ -243,10 +243,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public List<Email_Sent> getArchivedEmails() {
-        List<Email_Sent> archivedEmails = new ArrayList<>();
+    public List<Email_receiver> getArchivedInboxEmails(String currentUser) {
+        List<Email_receiver> deletedInboxEmails = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM emails WHERE is_archived = 1", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM emails WHERE receiver = ? AND is_archived = 1", new String[]{currentUser});
 
         if (cursor.moveToFirst()) {
             do {
@@ -255,14 +255,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
                 String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
                 String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_CONTENT));
-                archivedEmails.add(new Email_Sent(id, sender, receiver, subject, content));
+                deletedInboxEmails.add(new Email_receiver(id, sender, receiver, subject, content));
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return archivedEmails;
+
+        return deletedInboxEmails;
     }
 
+    public List<Email_Sent> getArchivedSentEmails(String currentUser) {
+        List<Email_Sent> deletedSentEmails = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM emails WHERE sender = ? AND is_archived = 1", new String[]{currentUser});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COL_SENT_EMAIL_ID));
+                String sender = cursor.getString(cursor.getColumnIndexOrThrow(COL_SENDER));
+                String receiver = cursor.getString(cursor.getColumnIndexOrThrow(COL_RECEIVER));
+                String subject = cursor.getString(cursor.getColumnIndexOrThrow(COL_SUBJECT));
+                String content = cursor.getString(cursor.getColumnIndexOrThrow(COL_CONTENT));
+                deletedSentEmails.add(new Email_Sent(id, sender, receiver, subject, content));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return deletedSentEmails;
+    }
 
     // Check if the user table has any users (for initial setup)
     public boolean hasUsers() {

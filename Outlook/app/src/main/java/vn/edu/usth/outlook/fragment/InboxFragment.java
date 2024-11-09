@@ -33,7 +33,6 @@ public class InboxFragment extends Fragment implements SelectListener {
     private List<String> archivedMail = new ArrayList<>();
     private List<Email_receiver> emailReceiveList;
     private DatabaseHelper dbHelper;
-    private View inboxholder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +40,6 @@ public class InboxFragment extends Fragment implements SelectListener {
 
         // Khởi tạo RecyclerView và placeholder
         recyclerInbox = view.findViewById(R.id.recycler_inbox);
-        inboxholder = view.findViewById(R.id.inbox_holder);
         recyclerInbox.setHasFixedSize(true);
         recyclerInbox.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
@@ -60,8 +58,6 @@ public class InboxFragment extends Fragment implements SelectListener {
         receiveAdapter = new ReceiveAdapter(getContext(), emailReceiveList, (SelectListener) this);
         recyclerInbox.setAdapter(receiveAdapter);
 
-        // Hiển thị placeholder nếu danh sách rỗng
-        togglePlaceholder();
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerInbox);
@@ -69,15 +65,6 @@ public class InboxFragment extends Fragment implements SelectListener {
         return view;
     }
 
-    private void togglePlaceholder() {
-        if (emailReceiveList.isEmpty()) {
-            recyclerInbox.setVisibility(View.GONE);
-            inboxholder.setVisibility(View.VISIBLE);
-        } else {
-            recyclerInbox.setVisibility(View.VISIBLE);
-            inboxholder.setVisibility(View.GONE);
-        }
-    }
 
     private final ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
